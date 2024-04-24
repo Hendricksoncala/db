@@ -1,3 +1,3 @@
-import {getAllCodeRequestCodeClientDateRequestDateWait} from "./module/requests.js"
+import {getOverdueRequests} from "./module/requests.js";
 
-console.log(await getAllCodeRequestCodeClientDateRequestDateWait());
+console.log(await getOverdueRequests());
