@@ -1,3 +1,3 @@
-import {getAllPageOfPaypalAt2008} from "./module/requests.js";
+import {getOverdueRequests} from "./module/requests.js";
 
-console.log(await getAllPageOfPaypalAt2008());
+console.log(await getOverdueRequests());
