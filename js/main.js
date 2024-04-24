@@ -1,3 +1,3 @@
-import {getAllFullnamePositionDiferentSalesRepresentative} from "./module/employees.js"
+import {getAllCodeRequestCodeClientDateRequestDateWait} from "./module/requests.js"
 
-console.log(await getAllFullnamePositionDiferentSalesRepresentative());
+console.log(await getAllCodeRequestCodeClientDateRequestDateWait());
