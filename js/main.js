@@ -1,3 +1,3 @@
-import getAllOficceAndCodeCity from "./module/clients.js"
+import {getAllFullnamePositionDiferentSalesRepresentative} from "./module/employees.js"
 
-console.log(await getAllOficceAndCodeCity());
+console.log(await getAllFullnamePositionDiferentSalesRepresentative());

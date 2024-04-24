@@ -1,9 +1,9 @@
-import { 
-    getEmployeesByCode 
-} from "./employees.js";
-import { 
-    getOfficesByCode 
-} from "./offices.js";
+//import { 
+//   getEmployeesByCode 
+//} from "./employees.js";
+//import { 
+//    getOfficesByCode 
+//} from "./offices.js";
 
 // 16. Devuelve un listado con todos los clientes que sean de la 
 // ciudad de Madrid y cuyo representante de ventas tenga el código 
