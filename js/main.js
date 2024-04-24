@@ -1,3 +1,3 @@
-import {getAllFormsPayments} from "./module/payment.js";
+import {getAllProductsOrnamentales100} from "./module/product.js";
 
-console.log(await getAllFormsPayments());
+console.log(await getAllProductsOrnamentales100());
