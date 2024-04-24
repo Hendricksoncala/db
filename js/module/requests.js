@@ -54,3 +54,34 @@ export const getOverdueRequests = async () => {
 
     return overdueRequests;
 };
+
+//11. Devuelve un listado de todos los pedidos que fueron rechazados en 2009
+export const getAllRejectedOrdersIn2009 = async () => {
+    let res = await fetch("http://localhost:5508/requests")
+    let data = await res.json();
+    let rejectsorder = []
+
+    data.forEach(order => {
+        if (order.status === "Rechazado" && new Date(order.date_request).getFullYear() === 2009){
+            rejectsorder.push(order);
+        }
+        else ("pipipi")
+
+    }
+    );
+    return rejectsorder;
+}
+
+//12.Devuelve un listado de todos los pedidos que han sido entregados en el mes de enero de cualquier ano
+export const getAllDeliveredOrderInJanuary = async () => {
+    let res = await fetch("http://localhost:5508/requests")
+    let data = await res.json();
+    let DeliveredJanuary = []
+
+    data.forEach(order => {
+        if (order.status === "Entregado" && new Date(order.date_request).getMonth() === 0){
+            DeliveredJanuary.push(order)
+        }
+    })
+    return DeliveredJanuary
+}

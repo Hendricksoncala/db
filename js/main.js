@@ -1,3 +1,3 @@
-import {getOverdueRequests} from "./module/requests.js";
+import {getAllFormsPayments} from "./module/payment.js";
 
-console.log(await getOverdueRequests());
+console.log(await getAllFormsPayments());

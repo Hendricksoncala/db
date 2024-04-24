@@ -20,3 +20,19 @@ export const getAllPaymentsFromPayPalEachYear = async() =>{
   
     return dataUpdate
 }
+
+//14.Devuelve un listado con todas las formas de pago que aparecen en la tabla pago. tenga en cuantta que no deben aparecer formas de pago repetidas
+export const getAllFormsPayments = async() => {
+    let res = await fetch("http://localhost:5505/payments");
+    let data = await res.json();
+    
+    // Crear un conjunto para almacenar las formas de pago únicas
+    let uniqueFormsPayments = new Set();
+
+    data.forEach(payment => {
+        uniqueFormsPayments.add(payment.payment);
+
+    });
+    return Array.from(uniqueFormsPayments)
+}
+
