@@ -74,6 +74,7 @@ export const getAllRejectedOrdersIn2009 = async () => {
 
 //12.Devuelve un listado de todos los pedidos que han sido entregados en el mes de enero de cualquier ano
 export const getAllDeliveredOrderInJanuary = async () => {
+    console.log("djksjdk")
     let res = await fetch("http://localhost:5508/requests")
     let data = await res.json();
     let DeliveredJanuary = []

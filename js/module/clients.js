@@ -5,6 +5,8 @@
 //    getOfficesByCode 
 //} from "./offices.js";
 
+
+
 // 16. Devuelve un listado con todos los clientes que sean de la 
 // ciudad de Madrid y cuyo representante de ventas tenga el código 
 // de empleado 11 o 30.
@@ -19,11 +21,12 @@ export const getAllClientsFromCityAndCode = async()=>{
 // 7. Devuelve el nombre de los clientes y el nombre de sus representantes
 // junto con la ciudad de la oficina a la que pertenece el representante.
 export const getAll = async()=>{
+
     let res = await fetch("http://localhost:5501/clients")
     let client = await res.json();
     for (let i = 0; i < client.length; i++) {
         // Actualiza la data clientes eliminando identificadores que no queremos
-        let { 
+        let {  
             id:id_client,
             limit_credit,
             postal_code:postal_code_client,
@@ -64,10 +67,7 @@ export const getAll = async()=>{
         // {  
         //     client_code: 38,
         //     client_name: 'El Jardin Viviente S.L',
-        //     contact_name: 'Justin',
-        //     contact_lastname: 'Smith',
-        //     code_employee_sales_manager: 31,
-        //     employee_code: 31,
+        //     contact_name: 'Justin'hola
         //     name: 'Mariko',
         //     lastname1: 'Kishi',
         //     lastname2: '',
@@ -83,4 +83,40 @@ export const getAll = async()=>{
         
     }
     return client;
+}
+
+
+
+import { getEmployeesByCode } from "./employees.js";
+
+// Función para obtener todos los clientes y sus representantes de ventas
+export async function getAllClientsAndSalesManagers() {
+    const clientsResponse = await fetch("http://localhost:5501/clients");
+    const clientsData = await clientsResponse.json();
+
+    const clientsWithSalesManagers = [];
+
+    // Iterar sobre cada cliente
+    for (const client of clientsData) {
+        // Obtener el empleado (representante de ventas) asociado a este cliente
+        const employeeData = await getEmployeesByCode(client.code_employee_sales_manager);
+        
+        // Verificar si se encontraron datos de empleado
+        if (employeeData && employeeData.length > 0) {
+            const salesManager = employeeData[0]; // Tomar el primer empleado encontrado
+            // Agregar el cliente junto con su representante de ventas al arreglo de resultados
+            clientsWithSalesManagers.push({
+                client_name: client.client_name,
+                sales_manager_name: `${salesManager.name} ${salesManager.lastname1} ${salesManager.lastname2}`
+            });
+        } else {
+            // Si no se encontraron datos de empleado, agregar el cliente con representante de ventas desconocido
+            clientsWithSalesManagers.push({
+                client_name: client.client_name,
+                sales_manager_name: "Representante de Ventas Desconocido"
+            });
+        }
+    }
+
+    return clientsWithSalesManagers;
 }

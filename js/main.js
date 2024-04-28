@@ -1,3 +1,3 @@
-import {getAllProductsOrnamentales100} from "./module/product.js";
+import { getAllClientsAndSalesManagers } from "./module/clients.js";
 
-console.log(await getAllProductsOrnamentales100());
+console.log(await getAllClientsAndSalesManagers())
