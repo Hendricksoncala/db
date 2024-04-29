@@ -5,6 +5,13 @@ export async function getEmployeesByCode(employeeCode) {
     return data;
 }
 
+//obtener el nombre de un empleado
+export const getAllEmployeeNames = async(code)=>{
+    let res=await fetch(`http://localhost:5502/employee?employee_code=${code}`)
+    let data =await res.json();
+    return data;
+}
+
 
 
 // 3. Devuelve un listado con el nombre, apellidos y email de los empleados 

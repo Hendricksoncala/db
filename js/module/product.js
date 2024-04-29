@@ -5,3 +5,10 @@ export const getAllProductsOrnamentales100  = async() =>{
     let data = await res.json();
     return data
 }
+
+
+export async function getAllProductsByCode(code) {
+    let res = await fetch(`http://localhost:5502/products?code=$code`);
+    let data = await res.json();
+    return data;
+  }

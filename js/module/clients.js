@@ -1,5 +1,5 @@
 import { getAllEmployeeNames } from "./employees.js";
-import { getAllClientsWhoPaid } from "./payments.js";
+import { getAllClientsWhoPaid } from "./payment.js";
 import { getAllOffices } from "./offices.js";
 import { getAllClientsWhoRequest } from "./requests.js";
 import { getAllRequestDetailsByRequestCode } from "./request_details.js";
@@ -128,11 +128,12 @@ export const getAllClientsAndSalesManagerNameAndIfThereIsPayments = async ()=>{
     let dataUpdated = [];
     for (let i = 0; i < client.length; i++){
         let [payments] = await getAllClientsWhoPaid(client[i].client_code);
+
         if (payments != null){
             let { ...paymentsUpdate } = payments;
             let { ...clientUpdate} = client[i];
             client[i] = clientUpdate;
-            let [employee ] = await getAllEmployeeNames(clientUpdate.code_employee_sales_manager);
+            let [ employee ] = await getAllEmployeeNames(clientUpdate.code_employee_sales_manager);
             let { ...employeeUpdate } =  employee;
             let data = { ...clientUpdate, ...employeeUpdate, ...paymentsUpdate };
             dataUpdated.push({
@@ -145,4 +146,28 @@ export const getAllClientsAndSalesManagerNameAndIfThereIsPayments = async ()=>{
     return dataUpdated
 }
 
+//2.3 Muestra el nombre de los clientes que **no** hayan realizado pagos junto con el nombre de sus representantes de ventas.
+export const getAllClientsAndSalesManagerNameAndIfThereIsNotPayments = async ()=>{
+    let res = await fetch("http://localhost:5501/clients")
+    let client = await res.json();
+    let dataUpdated = [];
+    for (let i = 0; i < client.length; i++){
+        let [payments] = await getAllClientsWhoPaid(client[i].client_code);
+
+        if (payments == null){
+            let { ...paymentsUpdate } = payments;
+            let { ...clientUpdate} = client[i];
+            client[i] = clientUpdate;
+            let [ employee ] = await getAllEmployeeNames(clientUpdate.code_employee_sales_manager);
+            let { ...employeeUpdate } =  employee;
+            let data = { ...clientUpdate, ...employeeUpdate, ...paymentsUpdate };
+            dataUpdated.push({
+                "client_name": `${data.client_name}`,
+                "sales_manager_complete_name": `${data.name} ${data.lastname1} ${data.lastname2}`
+
+            })
+        }
+    }
+    return dataUpdated
+}
 
