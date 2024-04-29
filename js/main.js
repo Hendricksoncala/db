@@ -7,7 +7,10 @@ import {
 
     }
       from "./module/clients.js";
+import {
+  AllDirectionsWithClientsInFuenlabrada
+} from "./module/offices.js"
 
-console.log(await getAllClientsAndSalesManagerNameAndIfThereWhoDontPaymentAndCity())
+console.log(await AllDirectionsWithClientsInFuenlabrada())
 
 

@@ -31,3 +31,29 @@ export const getAllOffices = async(codeOffice)=>{
     let data = await res.json();
     return data;
 }
+
+//2.6. Lista la dirección de las oficinas que tengan clientes en `Fuenlabrada`.
+export const AllDirectionsWithClientsInFuenlabrada = async()=>{
+    let clients = await fetch("http://localhost:5501/clients?city=Fuenlabrada").then(response => response.json())
+    let offices = await fetch("http://localhost:5504/offices").then(response => response.json())
+
+    let dataUpdate = []
+
+    clients.forEach(client => {
+        offices.forEach(office => {
+            if (client.code_office == office.code_office)
+            dataUpdate.push({
+                office_address: `${office.address1} ${office.address2}`
+            }
+                
+            );
+        }
+
+            
+            );
+      
+    })
+
+
+    return dataUpdate;
+}

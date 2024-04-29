@@ -245,3 +245,4 @@ export const getAllClientsAndSalesManagerNameAndIfThereWhoDontPaymentAndCity = a
 
   return dataUpdate
 }
+
