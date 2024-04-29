@@ -85,7 +85,8 @@ export const getAll = async()=>{
 }
 
 
-//2.1
+//2.1 1. Obtén un listado con el nombre de cada cliente y el nombre y apellido de su representante de ventas.
+
 import { getEmployeesByCode } from "./employees.js";
 
 // Función para obtener todos los clientes y sus representantes de ventas
@@ -121,7 +122,8 @@ export async function getAllClientsAndSalesManagers() {
 }
 
 
-//2.2
+//2.2 2. Muestra el nombre de los clientes que hayan realizado pagos junto con el nombre de sus representantes de ventas.
+
 export const getAllClientsAndSalesManagerNameAndIfThereIsPayments = async ()=>{
     let res = await fetch("http://localhost:5501/clients")
     let client = await res.json();
@@ -147,27 +149,65 @@ export const getAllClientsAndSalesManagerNameAndIfThereIsPayments = async ()=>{
 }
 
 //2.3 Muestra el nombre de los clientes que **no** hayan realizado pagos junto con el nombre de sus representantes de ventas.
-export const getAllClientsAndSalesManagerNameAndIfThereIsNotPayments = async ()=>{
-    let res = await fetch("http://localhost:5501/clients")
-    let client = await res.json();
+export const getAllClientsWithoutPaymentsAndSalesManagerName = async () => {
+    let res = await fetch("http://localhost:5501/clients");
+    let clients = await res.json();
     let dataUpdated = [];
-    for (let i = 0; i < client.length; i++){
-        let [payments] = await getAllClientsWhoPaid(client[i].client_code);
-
-        if (payments == null){
-            let { ...paymentsUpdate } = payments;
-            let { ...clientUpdate} = client[i];
-            client[i] = clientUpdate;
-            let [ employee ] = await getAllEmployeeNames(clientUpdate.code_employee_sales_manager);
-            let { ...employeeUpdate } =  employee;
-            let data = { ...clientUpdate, ...employeeUpdate, ...paymentsUpdate };
-            dataUpdated.push({
-                "client_name": `${data.client_name}`,
-                "sales_manager_complete_name": `${data.name} ${data.lastname1} ${data.lastname2}`
-
-            })
-        }
+  
+    for (let i = 0; i < clients.length; i++) {
+      let clientCode = clients[i].client_code;
+      let payments = await getAllClientsWhoPaid(clientCode);
+  
+      if (!payments || payments.length === 0) { // Si no hay pagos o el arreglo está vacío
+        let employeeCode = clients[i].code_employee_sales_manager;
+        let employee = await getAllEmployeeNames(employeeCode);
+        let salesManagerName = `${employee.name} ${employee.lastname1} ${employee.lastname2}`;
+  
+        dataUpdated.push({
+          client_name: clients[i].client_name,
+          sales_manager_complete_name: salesManagerName
+        });
+      }
     }
-    return dataUpdated
-}
+  
+    return dataUpdated;
+  };
 
+  export const getAllClientsAndSalesManagerNameAndIfThereIsPaymentsAndCity = async () => {
+    const clientsResponse = await fetch("http://localhost:5501/clients");
+    const clientsData = await clientsResponse.json();
+    
+    const clientsWithSalesManagers = [];
+    
+    // Iterar sobre cada cliente
+    for (const client of clientsData) {
+      // Verificar si el cliente ha realizado pagos
+      const paymentsResponse = await getAllClientsWhoPaid(client.client_code);
+      const payments = paymentsResponse[0];
+      
+      if (payments !== null) {
+        // Obtener el empleado (representante de ventas) asociado a este cliente
+        const employeeData = await getEmployeesByCode(client.code_employee_sales_manager);
+        
+        // Verificar si se encontraron datos de empleado
+        if (employeeData && employeeData.length > 0) {
+          const salesManager = employeeData[0]; // Tomar el primer empleado encontrado
+          // Agregar el cliente junto con su representante de ventas al arreglo de resultados
+          clientsWithSalesManagers.push({
+            client_name: client.client_name,
+            sales_manager_name: `${salesManager.name} ${salesManager.lastname1} ${salesManager.lastname2}`,
+            city: salesManager.city // Agregar la ciudad de la oficina del representante de ventas
+          });
+        } else {
+          // Si no se encontraron datos de empleado, agregar el cliente con representante de ventas desconocido
+          clientsWithSalesManagers.push({
+            client_name: client.client_name,
+            sales_manager_name: "Representante de Ventas Desconocido",
+            city: "Desconocido" // Agregar la ciudad desconocida
+          });
+        }
+      }
+    }
+    
+    return clientsWithSalesManagers;
+  }
