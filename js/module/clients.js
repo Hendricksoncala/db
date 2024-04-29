@@ -173,41 +173,40 @@ export const getAllClientsWithoutPaymentsAndSalesManagerName = async () => {
     return dataUpdated;
   };
 
-  export const getAllClientsAndSalesManagerNameAndIfThereIsPaymentsAndCity = async () => {
-    const clientsResponse = await fetch("http://localhost:5501/clients");
-    const clientsData = await clientsResponse.json();
-    
-    const clientsWithSalesManagers = [];
-    
-    // Iterar sobre cada cliente
-    for (const client of clientsData) {
-      // Verificar si el cliente ha realizado pagos
-      const paymentsResponse = await getAllClientsWhoPaid(client.client_code);
-      const payments = paymentsResponse[0];
-      
-      if (payments !== null) {
-        // Obtener el empleado (representante de ventas) asociado a este cliente
-        const employeeData = await getEmployeesByCode(client.code_employee_sales_manager);
-        
-        // Verificar si se encontraron datos de empleado
-        if (employeeData && employeeData.length > 0) {
-          const salesManager = employeeData[0]; // Tomar el primer empleado encontrado
-          // Agregar el cliente junto con su representante de ventas al arreglo de resultados
-          clientsWithSalesManagers.push({
-            client_name: client.client_name,
-            sales_manager_name: `${salesManager.name} ${salesManager.lastname1} ${salesManager.lastname2}`,
-            city: salesManager.city // Agregar la ciudad de la oficina del representante de ventas
-          });
-        } else {
-          // Si no se encontraron datos de empleado, agregar el cliente con representante de ventas desconocido
-          clientsWithSalesManagers.push({
-            client_name: client.client_name,
-            sales_manager_name: "Representante de Ventas Desconocido",
-            city: "Desconocido" // Agregar la ciudad desconocida
-          });
-        }
+//2.4
+export const getAllClientsAndSalesManagerNameAndIfThereIsPaymentsAndCity = async () => {
+  let payments = await fetch("http://localhost:5505/payments").then(response => response.json())
+  let clients = await fetch("http://localhost:5501/clients").then(response => response.json())
+  let managers = await fetch("http://localhost:5502/employee").then(response => response.json())
+  let offices = await fetch("http://localhost:5504/offices").then(response => response.json())
+  let dataUpdate = []
+
+  payments.forEach(payment => {
+    clients.forEach(client => {
+      if (payment.code_client == client.client_code) {
+        managers.forEach(manager => {
+          if (manager.employee_code == client.code_employee_sales_manager) {
+            offices.forEach(office => {
+              if (manager.code_office == office.code_office) {
+                dataUpdate.push({
+                  ClientsName: client.client_name,
+                  manager: `${manager.name} ${manager.lastname1} ${manager.lastname2}`,
+                  cityoffice: office.city
+                });
+              }
+            });
+          }
+        });
       }
+    });
+  });
+  let uniqueUpdate = {};
+  dataUpdate.forEach(item => {
+    if (!uniqueUpdate[item.ClientsName]) {
+      uniqueUpdate[item.ClientsName] = item;
     }
-    
-    return clientsWithSalesManagers;
-  }
+  });
+
+  let result = Object.values(uniqueUpdate);
+  return result;
+}
