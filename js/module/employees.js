@@ -1,3 +1,12 @@
+//funcion para obtener el nombre y apellido de el empleado
+export async function getEmployeesByCode(employeeCode) {  
+    let res = await fetch(`http://localhost:5502/employee?employee_code=${employeeCode}`);
+    let data = await res.json();
+    return data;
+}
+
+
+
 // 3. Devuelve un listado con el nombre, apellidos y email de los empleados 
 // cuyo jefe tiene un código de jefe igual a 7.
 export const getAllFullNameAndEmailsAndBoss = async() =>{
@@ -49,16 +58,3 @@ export const getAllFullnamePositionDiferentSalesRepresentative = async()=>{
 }
 
 
-// Obtener toda la informacion del empleado por codigo
-//export const getEmployeesByCode = async(code)=>{
-//    let res = await fetch(`http://localhost:5502/employee?employee_code=${code}`)
-//    let data = await res.json();
-//    return data
-//}
-
-//funcion para obtener el nombre y apellido de el empleado
-export async function getEmployeesByCode(employeeCode) {  
-    let res = await fetch(`http://localhost:5502/employee?employee_code=${employeeCode}`);
-    let data = await res.json();
-    return data;
-}

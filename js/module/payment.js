@@ -1,3 +1,9 @@
+export const getAllClientsWhoPaid = async(code)=>{
+    let res = await fetch(`http://localhost:5505/payments?code_client=${code}`)
+    let data =await res.json();
+    return data;
+
+}
 // 13 Devuelve un listado con todos los pagos que se realizaron en el 
 // año 2008 mediante Paypal. Ordene el resultado de mayor a menor.
 

@@ -1,10 +1,9 @@
-//import { 
-//   getEmployeesByCode 
-//} from "./employees.js";
-//import { 
-//    getOfficesByCode 
-//} from "./offices.js";
-
+import { getAllEmployeeNames } from "./employees.js";
+import { getAllClientsWhoPaid } from "./payments.js";
+import { getAllOffices } from "./offices.js";
+import { getAllClientsWhoRequest } from "./requests.js";
+import { getAllRequestDetailsByRequestCode } from "./request_details.js";
+import { getAllProductsByCode } from "./product.js"
 
 
 // 16. Devuelve un listado con todos los clientes que sean de la 
@@ -86,7 +85,7 @@ export const getAll = async()=>{
 }
 
 
-
+//2.1
 import { getEmployeesByCode } from "./employees.js";
 
 // Función para obtener todos los clientes y sus representantes de ventas
@@ -120,3 +119,30 @@ export async function getAllClientsAndSalesManagers() {
 
     return clientsWithSalesManagers;
 }
+
+
+//2.2
+export const getAllClientsAndSalesManagerNameAndIfThereIsPayments = async ()=>{
+    let res = await fetch("http://localhost:5501/clients")
+    let client = await res.json();
+    let dataUpdated = [];
+    for (let i = 0; i < client.length; i++){
+        let [payments] = await getAllClientsWhoPaid(client[i].client_code);
+        if (payments != null){
+            let { ...paymentsUpdate } = payments;
+            let { ...clientUpdate} = client[i];
+            client[i] = clientUpdate;
+            let [employee ] = await getAllEmployeeNames(clientUpdate.code_employee_sales_manager);
+            let { ...employeeUpdate } =  employee;
+            let data = { ...clientUpdate, ...employeeUpdate, ...paymentsUpdate };
+            dataUpdated.push({
+                "client_name": `${data.client_name}`,
+                "sales_manager_complete_name": `${data.name} ${data.lastname1} ${data.lastname2}`
+
+            })
+        }
+    }
+    return dataUpdated
+}
+
+
