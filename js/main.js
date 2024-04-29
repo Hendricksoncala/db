@@ -2,11 +2,12 @@ import {
      getAllClientsAndSalesManagers ,
      getAllClientsAndSalesManagerNameAndIfThereIsPayments,
      getAllClientsWithoutPaymentsAndSalesManagerName,
-     getAllClientsAndSalesManagerNameAndIfThereIsPaymentsAndCity
+     getAllClientsAndSalesManagerNameAndIfThereIsPaymentsAndCity,
+     getAllClientsAndSalesManagerNameAndIfThereWhoDontPaymentAndCity
 
     }
       from "./module/clients.js";
 
-console.log(await getAllClientsAndSalesManagerNameAndIfThereIsPaymentsAndCity())
+console.log(await getAllClientsAndSalesManagerNameAndIfThereWhoDontPaymentAndCity())
 
 

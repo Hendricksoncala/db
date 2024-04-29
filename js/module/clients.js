@@ -210,3 +210,38 @@ export const getAllClientsAndSalesManagerNameAndIfThereIsPaymentsAndCity = async
   let result = Object.values(uniqueUpdate);
   return result;
 }
+
+//2.5 Devuelve el nombre de los clientes que **no** hayan hecho pagos y el nombre de sus representantes junto con la ciudad de la oficina a la que pertenece el representante.
+export const getAllClientsAndSalesManagerNameAndIfThereWhoDontPaymentAndCity = async () => {
+  let payments = await fetch("http://localhost:5505/payments").then(response => response.json())
+  let clients = await fetch("http://localhost:5501/clients").then(response => response.json())
+  let managers = await fetch("http://localhost:5502/employee").then(response => response.json())
+  let offices = await fetch("http://localhost:5504/offices").then(response => response.json())
+  let dataUpdate = []
+
+  clients.forEach(client => {
+    let hasPayment = false
+    payments.forEach(payment => {
+      if (payment.code_client == client.client_code) {
+        hasPayment = true
+      }
+    })
+    if (!hasPayment) {
+      managers.forEach(manager => {
+        if (manager.employee_code == client.code_employee_sales_manager) {
+          offices.forEach(office => {
+            if (manager.code_office == office.code_office) {
+              dataUpdate.push({
+                ClientsName: client.client_name,
+                manager: `${manager.name} ${manager.lastname1} ${manager.lastname2}`,
+                cityoffice: office.city
+              })
+            }
+          })
+        }
+      })
+    }
+  })
+
+  return dataUpdate
+}
