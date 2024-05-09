@@ -12,6 +12,10 @@ import {
   AllDirectionsWithClientsInFuenlabrada
 } from "./module/offices.js"
 
-console.log(await getAllClientsWithoutPaymentsAndSalesManagerName())
+import {
+  getAllEmployeesWithBossNameAndTheBossesNames
+} from "./module/employees.js"
+
+console.log(await getAllEmployeesWithBossNameAndTheBossesNames())
 
 

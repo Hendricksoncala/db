@@ -126,6 +126,8 @@ export class Mycard extends HTMLElement{
             
         });
     }
+
+    
     // async getAllClientsFromCityAndCodeDesign(){
     //     let data = await getAllClientsFromCityAndCode();
     //     data.forEach(val => {

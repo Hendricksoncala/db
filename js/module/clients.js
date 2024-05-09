@@ -17,7 +17,7 @@ export const getAllClientsFromCityAndCode = async()=>{
     return clientUpdate
 }
 // Consultas multitabla
-// 7. Devuelve el nombre de los clientes y el nombre de sus representantes
+// 2.7. Devuelve el nombre de los clientes y el nombre de sus representantes
 // junto con la ciudad de la oficina a la que pertenece el representante.
 export const getAll = async()=>{
 

@@ -65,3 +65,31 @@ export const getAllFullnamePositionDiferentSalesRepresentative = async()=>{
 }
 
 
+//2.9  Devuelve un listado que muestre el nombre de cada empleados,
+//el nombre de su jefe y el nombre del jefe de sus jefe.
+export const getAllEmployeesWithBossNameAndTheBossesNames = async () => {
+    const res = await fetch("http://localhost:5502/employee");
+    const dataEmployees = await res.json();
+    const result = [];
+  
+    for (const employee of dataEmployees) {
+      const bossNames = await getBossNames(employee.code_boss, []);
+      result.push({
+        employeeName: employee.name,
+        bossName: bossNames.length > 0? bossNames[0] : '',
+        bossBossName: bossNames.length > 1? bossNames[1] : '',
+      });
+    }
+  
+    return result;
+  };
+  
+  const getBossNames = async (code_boss, bossNames) => {
+    if (!code_boss) return bossNames;
+  
+    const res = await fetch(`http://localhost:5502/employee?employee_code=${code_boss}`);
+    const bossData = await res.json();
+    bossNames.push(bossData.name);
+  
+    return await getBossNames(bossData.code_boss, bossNames);
+  };
