@@ -4,7 +4,9 @@ import {
      getAllClientsAndSalesManagerNameAndIfThereIsPayments,
      getAllClientsWithoutPaymentsAndSalesManagerName,
      getAllClientsAndSalesManagerNameAndIfThereIsPaymentsAndCity,
-     getAllClientsAndSalesManagerNameAndIfThereWhoDontPaymentAndCity
+     getAllClientsAndSalesManagerNameAndIfThereWhoDontPaymentAndCity,
+     getClientsWithDelayedOrders,
+     productGamasByClient
 
     }
       from "./module/clients.js";
@@ -16,6 +18,6 @@ import {
   getAllEmployeesWithBossNameAndTheBossesNames
 } from "./module/employees.js"
 
-console.log(await getAllEmployeesWithBossNameAndTheBossesNames())
+console.log(await productGamasByClient())
 
 

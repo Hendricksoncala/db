@@ -66,7 +66,7 @@ export const getAllFullnamePositionDiferentSalesRepresentative = async()=>{
 
 
 //2.9  Devuelve un listado que muestre el nombre de cada empleados,
-//el nombre de su jefe y el nombre del jefe de sus jefe.
+//el nombre de su jefe y el nombre del jefe de sus jefe. (FALTA ARREGLARLO TIRA UNDEFINED)
 export const getAllEmployeesWithBossNameAndTheBossesNames = async () => {
     const res = await fetch("http://localhost:5502/employee");
     const dataEmployees = await res.json();
@@ -89,7 +89,10 @@ export const getAllEmployeesWithBossNameAndTheBossesNames = async () => {
   
     const res = await fetch(`http://localhost:5502/employee?employee_code=${code_boss}`);
     const bossData = await res.json();
+    console.log('bossData:', bossData); // debuggear la respuesta de la API
     bossNames.push(bossData.name);
   
     return await getBossNames(bossData.code_boss, bossNames);
   };
+
+

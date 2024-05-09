@@ -249,3 +249,65 @@ export const getAllClientsAndSalesManagerNameAndIfThereWhoDontPaymentAndCity = a
   return dataUpdate
 }
 
+
+//2.10 Devuelve el nombre de los clientes a los que no se les ha entregado a tiempo un pedido.
+// Devuelve el nombre de los clientes a los que no se les ha entregado a tiempo un pedido.
+export const getClientsWithDelayedOrders = async () => {
+  try {
+    const orders = await fetch("http://localhost:5501/orders").then(response => response.json());
+    const clients = await fetch("http://localhost:5510/clients").then(response => response.json());
+    const offices = await fetch("http://localhost:5504/offices").then(response => response.json());
+    const payments = await fetch("http://localhost:5505/payments").then(response => response.json());
+
+    const delayedClients = clients.filter(client => {
+      const clientOrders = orders.filter(order => order.client_id === client.id);
+      const hasDelayedOrder = clientOrders.some(order => order.delivery_status === "delayed");
+      return hasDelayedOrder;
+    });
+
+    const delayedClientsInfo = delayedClients.map(client => {
+      const office = offices.find(office => office.code_office === client.code_office);
+      const clientPayments = payments.filter(payment => payment.code_client === client.client_code);
+      const totalPayments = clientPayments.reduce((total, payment) => total + payment.total, 0);
+
+      return {
+        ClientsName: client.client_name,
+        City: office.city,
+        TotalPayments: totalPayments
+      };
+    });
+
+    return delayedClientsInfo;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return [];
+  }
+};
+
+
+//2. 11. Devuelve un listado de las diferentes gamas de producto que ha comprado cada cliente.
+export const getProductGamasByClient = async () => {
+  let clients = await fetch('http://localhost:5510/clients');
+  clients = await clients.json();
+  let productGamasByClient = [];
+  for (let client of clients) {
+    let clientRequests = await getAllClientsWhoRequest(client.client_code);
+    let gamas = [];
+    for (let request of clientRequests) {
+      let requestDetails = await getAllRequestDetailsByRequestCode(request.code_request);
+      for (let requestDetail of requestDetails) {
+        let product = await getAllProductsByCode(requestDetail.product_code);
+        for (let prod of product) {
+          if (!gamas.includes(prod.gama)) {
+            gamas.push(prod.gama);
+          }
+        }
+      }
+    }
+    productGamasByClient.push({
+      client_name: client.client_name,
+      gamas: gamas
+    });
+  }
+  return productGamasByClient;
+};
