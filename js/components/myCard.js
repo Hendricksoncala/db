@@ -4,6 +4,7 @@ import {
     getAllClientsAndSalesManagers,
     getAllClientsAndSalesManagerNameAndIfThereIsPayments,
     getAllClientsWithoutPaymentsAndSalesManagerName,
+    getAllClientsAndSalesManagerNameAndIfThereIsPaymentsAndCity,
 } from "../module/clients.js";
 // import {
 //     getAllEmployNotClients 
@@ -102,7 +103,29 @@ export class Mycard extends HTMLElement{
         });
 
     }
+//2.4 Devuelve el nombre de los clientes que han hecho pagos y el nombre de sus representantes junto con la ciudad de la oficina a la que pertenece el representante.
+    async getAllClientsAndSalesManagerNameAndIfThereIsPaymentsAndCityDesign(){
+        let data = await getAllClientsAndSalesManagerNameAndIfThereIsPaymentsAndCity();
+        console.log(await getAllClientsAndSalesManagerNameAndIfThereIsPaymentsAndCity())
+        data.forEach(val => {
+            this.shadowRoot.innerHTML += /*html*/`
+                <div class="report__card">
+                    <div class="card__title">
+                        <div>${val.ClientsName}</div>
+                    </div>
+                    <div class="card__body">
+                        <div class="body__marck">
+                            <p><b>Cliente: </b>${val.ClientsName}</p>
+                            <p><b>Representante de Ventas: </b>${val.manager}</p>
+                            <p><b>Ciudad de Oficina </b>${val.cityoffice}</p>
 
+                        </div>
+                    </div>
+                </div>
+        `
+            
+        });
+    }
     // async getAllClientsFromCityAndCodeDesign(){
     //     let data = await getAllClientsFromCityAndCode();
     //     data.forEach(val => {
@@ -160,6 +183,7 @@ export class Mycard extends HTMLElement{
         if(name=="logic" && now=="client_2.1") this.getAllClientsAndSalesManagersDesign()
         if(name=="logic" && now=="client_2.2") this.getAllClientsAndSalesManagerNameAndIfThereIsPaymentsDesign()
         if(name=="logic" && now=="client_2.3") this.getAllClientsWithoutPaymentsAndSalesManagerNameDesign()
+        if(name=="logic" && now=="client_2.4") this.getAllClientsAndSalesManagerNameAndIfThereIsPaymentsAndCityDesign()
 
         
         // if(name=="logic" && now=="client_16") this.getAllClientsFromSpainAndRepresentative11Or30Design()
