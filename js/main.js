@@ -1,4 +1,5 @@
 import {
+    getAll,
      getAllClientsAndSalesManagers ,
      getAllClientsAndSalesManagerNameAndIfThereIsPayments,
      getAllClientsWithoutPaymentsAndSalesManagerName,
@@ -11,6 +12,6 @@ import {
   AllDirectionsWithClientsInFuenlabrada
 } from "./module/offices.js"
 
-console.log(await AllDirectionsWithClientsInFuenlabrada())
+console.log(await getAllClientsWithoutPaymentsAndSalesManagerName())
 
 

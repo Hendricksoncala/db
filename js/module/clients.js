@@ -10,7 +10,7 @@ import { getAllProductsByCode } from "./product.js"
 // ciudad de Madrid y cuyo representante de ventas tenga el código 
 // de empleado 11 o 30.
 export const getAllClientsFromCityAndCode = async()=>{
-    let res = await fetch("http://localhost:5501/clients?city=Madrid")
+    let res = await fetch("http://localhost:5510/clients?city=Madrid")
     let data = await res.json();
     let clientUpdate = [];
     clientUpdate = data.filter(val => val.code_employee_sales_manager == 11 || val.code_employee_sales_manager == 30);
@@ -21,7 +21,7 @@ export const getAllClientsFromCityAndCode = async()=>{
 // junto con la ciudad de la oficina a la que pertenece el representante.
 export const getAll = async()=>{
 
-    let res = await fetch("http://localhost:5501/clients")
+    let res = await fetch("http://localhost:5510/clients")
     let client = await res.json();
     for (let i = 0; i < client.length; i++) {
         // Actualiza la data clientes eliminando identificadores que no queremos
@@ -91,7 +91,7 @@ import { getEmployeesByCode } from "./employees.js";
 
 // Función para obtener todos los clientes y sus representantes de ventas
 export async function getAllClientsAndSalesManagers() {
-    const clientsResponse = await fetch("http://localhost:5501/clients");
+    const clientsResponse = await fetch("http://localhost:5510/clients");
     const clientsData = await clientsResponse.json();
 
     const clientsWithSalesManagers = [];
@@ -125,7 +125,7 @@ export async function getAllClientsAndSalesManagers() {
 //2.2 2. Muestra el nombre de los clientes que hayan realizado pagos junto con el nombre de sus representantes de ventas.
 
 export const getAllClientsAndSalesManagerNameAndIfThereIsPayments = async ()=>{
-    let res = await fetch("http://localhost:5501/clients")
+    let res = await fetch("http://localhost:5510/clients")
     let client = await res.json();
     let dataUpdated = [];
     for (let i = 0; i < client.length; i++){
@@ -150,18 +150,21 @@ export const getAllClientsAndSalesManagerNameAndIfThereIsPayments = async ()=>{
 
 //2.3 Muestra el nombre de los clientes que **no** hayan realizado pagos junto con el nombre de sus representantes de ventas.
 export const getAllClientsWithoutPaymentsAndSalesManagerName = async () => {
-    let res = await fetch("http://localhost:5501/clients");
+    let res = await fetch("http://localhost:5510/clients");
     let clients = await res.json();
     let dataUpdated = [];
   
     for (let i = 0; i < clients.length; i++) {
       let clientCode = clients[i].client_code;
       let payments = await getAllClientsWhoPaid(clientCode);
-  
+
+      let employeeCode = clients[i].code_employee_sales_manager;
+      let employee = await getAllEmployeeNames(employeeCode);
+      let salesManagerName = `${employee.name} ${employee.lastname1} ${employee.lastname2}`;
+      
       if (!payments || payments.length === 0) { // Si no hay pagos o el arreglo está vacío
-        let employeeCode = clients[i].code_employee_sales_manager;
-        let employee = await getAllEmployeeNames(employeeCode);
-        let salesManagerName = `${employee.name} ${employee.lastname1} ${employee.lastname2}`;
+
+        
   
         dataUpdated.push({
           client_name: clients[i].client_name,
@@ -176,7 +179,7 @@ export const getAllClientsWithoutPaymentsAndSalesManagerName = async () => {
 //2.4
 export const getAllClientsAndSalesManagerNameAndIfThereIsPaymentsAndCity = async () => {
   let payments = await fetch("http://localhost:5505/payments").then(response => response.json())
-  let clients = await fetch("http://localhost:5501/clients").then(response => response.json())
+  let clients = await fetch("http://localhost:5510/clients").then(response => response.json())
   let managers = await fetch("http://localhost:5502/employee").then(response => response.json())
   let offices = await fetch("http://localhost:5504/offices").then(response => response.json())
   let dataUpdate = []
@@ -214,7 +217,7 @@ export const getAllClientsAndSalesManagerNameAndIfThereIsPaymentsAndCity = async
 //2.5 Devuelve el nombre de los clientes que **no** hayan hecho pagos y el nombre de sus representantes junto con la ciudad de la oficina a la que pertenece el representante.
 export const getAllClientsAndSalesManagerNameAndIfThereWhoDontPaymentAndCity = async () => {
   let payments = await fetch("http://localhost:5505/payments").then(response => response.json())
-  let clients = await fetch("http://localhost:5501/clients").then(response => response.json())
+  let clients = await fetch("http://localhost:5510/clients").then(response => response.json())
   let managers = await fetch("http://localhost:5502/employee").then(response => response.json())
   let offices = await fetch("http://localhost:5504/offices").then(response => response.json())
   let dataUpdate = []
