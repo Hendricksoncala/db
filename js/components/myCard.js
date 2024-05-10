@@ -5,10 +5,18 @@ import {
     getAllClientsAndSalesManagerNameAndIfThereIsPayments,
     getAllClientsWithoutPaymentsAndSalesManagerName,
     getAllClientsAndSalesManagerNameAndIfThereIsPaymentsAndCity,
+    getAllclientsNotPayments,
+    getAllclientsNotRequests,
+    getAllclientsNotRequestsAndNotPayments
 } from "../module/clients.js";
-// import {
-//     getAllEmployNotClients 
-// } from "../module/employees.js";
+
+import {
+    
+} from "../module/employees.js";
+
+import {
+    getProductsNeverOrdered
+} from "../module/product.js";
 //PRIMERA PARTE DE LAS CONSULTAS
 
 //16.
@@ -132,55 +140,113 @@ export class Mycard extends HTMLElement{
     }
 
 //TERCERA PARTE DE LAS MULTITTABLAS--------------------------------------------------------------------------------
+//3.1  Devuelve un listado que muestre solamente los clientes que no han realizado ningún pago. 
+    async getAllclientsNotPaymentsDesign(){
+        let data = await getAllclientsNotPayments();
+        console.log(await getAllclientsNotPayments())
+        data.forEach(val => {
+            this.shadowRoot.innerHTML += /*html*/`
+                <div class="report__card">
+                    <div class="card__title">
+                        <p> Ningun pago : </p>
+                        <div>${val.client_name }</div> 
+                        
+                    </div>
+                    <div class="card__body">
+                        <div class="body__marck">
+                            <p><b>Codigo: </b>${val.client_code}</p>
+                            <p><b>Nombre de cliente: </b>${val.client_name}
 
-    // async getAllClientsFromCityAndCodeDesign(){
-    //     let data = await getAllClientsFromCityAndCode();
-    //     data.forEach(val => {
-    //         let money = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(val.limit_credit);
-    //         this.shadowRoot.innerHTML += /*html*/`
-            
-    //             <div class="report__card">
-    //                 <div class="card__title">
-    //                     <div>${val.client_name} # ${val.client_code}</div>
-    //                 </div>
-    //                 <div class="card__body">
-    //                     <div class="body__marck">
-    //                         <p><b>Id: </b> ${val.id}</p>
-    //                         <p><b>Codigo del empleado: </b>${val.code_employee_sales_manager}</p>
-    //                         <p><b>Contacto: </b>${val.phone} - ${val.fax}</p>
-    //                         <p><b>Nombre del representante: </b>${val.contact_name} ${val.contact_lastname}</p>
-    //                         <p><b>Dirrecion: </b>${val.address1} ${(val.address2) ? val.address2 : ""}</p>
-    //                         <p><b>Ubicacion: </b>${val.country} ${val.region} ${val.city} ${val.postal_code}</p>
-    //                         <p><b>Total a prestar: </b>${money}</p>
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //         `;
-    //     });
-    // }
-    // async getAllEmployNotClientsDesign(){
-    //     let data = await getAllEmployNotClients();
-    //     data.forEach(val => {
-    //         this.shadowRoot.innerHTML += /*html*/`
-            
-    //             <div class="report__card">
-    //                 <div class="card__title">
-    //                     <div>${val.name} ${val.lastname1} ${val.lastname2} # ${val.employee_code}</div>
-    //                 </div>
-    //                 <div class="card__body">
-    //                     <div class="body__marck">
-    //                         <p><b>Id: </b> ${val.id}</p>
-    //                         <p><b>Cargo: </b>${val.position}</p>
-    //                         <p><b>Oficina: </b>${val.code_office}</p>
-    //                         <p><b>Jefe encargado: </b>${val.name_boss}</p>
-    //                         <p><b>Numero de extencion: </b>${val.extension}</p>
-    //                         <p><b>Correo electronico: </b>${val.email}</p>
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //         `;
-    //     });
-    // }
+                        </div>
+                    </div>
+                </div>
+        `
+        });
+    }
+
+// 3.2 Devuelve un listado que muestre solamente los clientes que no han realizado ningún pedido.
+    async getAllclientsNotRequestsDesign(){
+        let data = await getAllclientsNotRequests();
+        console.log(await getAllclientsNotRequests());
+        data.forEach(val => {
+            this.shadowRoot.innerHTML += /*html*/`
+                <div class="report__card">
+                    <div class="card__title">
+                        <p> Ningun pedido : </p>
+                        <div>${val.client_name }</div> 
+                        
+                    </div>
+                    <div class="card__body">
+                        <div class="body__marck">
+                            <p><b>Codigo: </b>${val.client_code}</p>
+                            <p><b>Nombre de cliente: </b>${val.client_name}
+
+                        </div>
+                    </div>
+                </div>
+        `
+        });
+
+    }
+
+// 3.3 Devuelve un listado que muestre los clientes que no han realizado ningún pago y los que no han realizado ningún pedido.
+    async getAllclientsNotRequestsAndNotPaymentsDesign(){
+        let data = await getAllclientsNotRequestsAndNotPayments();
+        console.log( await getAllclientsNotRequestsAndNotPayments());
+        data.forEach(val => {
+            this.shadowRoot.innerHTML += /*html*/`
+                <div class="report__card">
+                    <div class="card__title">
+                        <p> Ningun pago ni pedido : </p>
+                        <div>${val.client_name }</div> 
+                        
+                    </div>
+                    <div class="card__body">
+                        <div class="body__marck">
+                            <p><b>Codigo: </b>${val.client_code}</p>
+                            <p><b>Nombre de cliente: </b>${val.client_name}
+
+
+                        </div>
+                    </div>
+                </div>
+        `
+        });
+
+    }
+
+
+//3.4
+//3.5
+//3.6
+//3.7
+//3.8 Devuelve un listado de los productos que nunca han aparecido en un pedido.
+async getProductsNeverOrderedDesign(){
+    let data = await getProductsNeverOrdered();
+    console.log(await getProductsNeverOrdered());
+    data.forEach(val => {
+        this.shadowRoot.innerHTML += /*html*/`
+            <div class="report__card">
+                <div class="card__title">
+                    <p> Productos nunca pedidos : </p>
+                    <div>${val.code_product }</div> 
+                    
+                </div>
+                <div class="card__body">
+                    <div class="body__marck">
+                        <p><b>Codigo: </b>${val.client_code}</p>
+                        <p><b>Nombre de cliente: </b>${val.client_name}
+
+
+                    </div>
+                </div>
+            </div>
+`
+});
+}
+
+
+
     static get observedAttributes() {
         return ["logic"];
     }
@@ -191,6 +257,16 @@ export class Mycard extends HTMLElement{
         if(name=="logic" && now=="client_2.2") this.getAllClientsAndSalesManagerNameAndIfThereIsPaymentsDesign()
         if(name=="logic" && now=="client_2.3") this.getAllClientsWithoutPaymentsAndSalesManagerNameDesign()
         if(name=="logic" && now=="client_2.4") this.getAllClientsAndSalesManagerNameAndIfThereIsPaymentsAndCityDesign()
+        if(name=="logic" && now=="client_3.1") this.getAllclientsNotPaymentsDesign()
+        if(name=="logic" && now=="client_3.2") this.getAllclientsNotRequestsDesign()
+        if(name=="logic" && now=="client_3.3") this.getAllclientsNotRequestsAndNotPaymentsDesign()
+        
+
+         
+            
+        if(name=="logic" && now=="product_3.8") this.getProductsNeverOrderedDesign()
+
+
 
         
         // if(name=="logic" && now=="client_16") this.getAllClientsFromSpainAndRepresentative11Or30Design()

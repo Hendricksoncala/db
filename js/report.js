@@ -17,14 +17,24 @@ btn.forEach(val =>{
                 <my-details logic="client_2.1" text="2.1  Obtén un listado con el nombre de cada cliente y el nombre y apellido de su representante de ventas."></my-details>
                 <my-details logic="client_2.2"text= "2.2 Muestra el nombre de los clientes que hayan realizado pagos junto con el nombre de sus representantes de ventas."></my-details>
                 <my-details logic="client_2.3"text= "2.3 Muestra el nombre de los clientes que **no** hayan realizado pagos junto con el nombre de sus representantes de ventas."></my-details>
-                <my-details logic="client_2.4"text= "2.4 Devuelve el nombre de los clientes que han hecho pagos y el nombre de sus representantes junto con la ciudad de la oficina a la que pertenece el representante.
-                "></my-details>
+                <my-details logic="client_2.4"text= "2.4 Devuelve el nombre de los clientes que han hecho pagos y el nombre de sus representantes junto con la ciudad de la oficina a la que pertenece el representante."></my-details>
+                <my-details logic="client_3.1"text= "3.1 Devuelve un listado que muestre solamente los clientes que no han realizado ningún pago."></my-details>
+                <my-details logic="client_3.2"text= "3.2 Devuelve un listado que muestre solamente los clientes que no han realizado ningún pedido."></my-details>
+                <my-details logic="client_3.3"text= "3.3 Devuelve un listado que muestre los clientes que no han realizado ningún pago y los que no han realizado ningún pedido."></my-details>
+
 
             `
         }
         if(e.target.innerHTML=="employees"){
             report__details.innerHTML = /*html*/`
                 <my-details logic="employ_12" text="12. Devuelve un listado con los datos de los empleados que no  tienen clientes asociados y el nombre de su jefe asociado"></my-details>
+            
+            `;
+        }
+        if(e.target.innerHTML=="product"){
+            report__details.innerHTML = /*html*/`
+                <my-details logic="product_3.8" text="3.8 Devuelve un listado de los productos que nunca han aparecido en un pedido.
+                "></my-details>
             
             `;
         }
