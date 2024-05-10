@@ -27,15 +27,15 @@ btn.forEach(val =>{
         }
         if(e.target.innerHTML=="employees"){
             report__details.innerHTML = /*html*/`
-                <my-details logic="employ_12" text="12. Devuelve un listado con los datos de los empleados que no  tienen clientes asociados y el nombre de su jefe asociado"></my-details>
+                <my-details logic="employ_2.9" text="2.8 Devuelve un listado con el nombre de los empleados junto con el nombre de sus jefes."></my-details>
             
             `;
         }
         if(e.target.innerHTML=="product"){
             report__details.innerHTML = /*html*/`
-                <my-details logic="product_3.8" text="3.8 Devuelve un listado de los productos que nunca han aparecido en un pedido.
-                "></my-details>
-            
+                <my-details logic="product_3.8" text="3.8 Devuelve un listado de los productos que nunca han aparecido en un pedido."></my-details>
+                <my-details logic="product_3.9" text="3.9 DDevuelve un listado de los productos que nunca han aparecido en un pedido. El resultado debe mostrar el nombre, la descripción y la imagen del producto."></my-details>
+
             `;
         }
 

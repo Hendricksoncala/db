@@ -17,9 +17,9 @@ import {
 } from "./module/offices.js"
 
 import {
-
+  getAllEmpleyeesAndBoss
 } from "./module/employees.js"
 
-console.log(await getAllclientsNotRequests())
+console.log(await getAllEmpleyeesAndBoss())
 
 

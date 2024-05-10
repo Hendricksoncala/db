@@ -11,11 +11,14 @@ import {
 } from "../module/clients.js";
 
 import {
-    
+    getAllEmpleyeesAndBoss,
+    getAllEmployeesAndBossOfBoss,
+    getEmployeesWithoutOfficeAndClients,
 } from "../module/employees.js";
 
 import {
-    getProductsNeverOrdered
+    getProductsNeverOrdered,
+    getProductsNotOrdered
 } from "../module/product.js";
 //PRIMERA PARTE DE LAS CONSULTAS
 
@@ -49,7 +52,7 @@ export class Mycard extends HTMLElement{
     }
 
 
-//SEGUNDA PARTE DE LAS MULTITABLA---------------------------------------------------------------------------
+//SEGUNDA PARTE DE LAS MULTITABLA------------------------------------------------------------------------------------------------------------------------------------------------------
 //2.1 1. Obtén un listado con el nombre de cada cliente y el nombre y apellido de su representante de ventas.
     async getAllClientsAndSalesManagersDesign(){
         let data = await getAllClientsAndSalesManagers();
@@ -139,7 +142,35 @@ export class Mycard extends HTMLElement{
         });
     }
 
-//TERCERA PARTE DE LAS MULTITTABLAS--------------------------------------------------------------------------------
+
+//2.5
+//2.6
+//2.7
+//2.8 Devuelve un listado con el nombre de los empleados junto con el nombre de sus jefes.
+    async getAllEmpleyeesAndBossDesign(){
+        let data = await getAllEmpleyeesAndBoss();
+        console.log(await getAllEmpleyeesAndBoss());
+        data.forEach(val => {
+            this.shadowRoot.innerHTML += /*html*/`
+                <div class="report__card">
+                    <div class="card__title">
+                        <div>${val.employee}</div>
+                    </div>
+                    <div class="card__body">
+                        <div class="body__marck">
+                            <p><b>Empleado: </b>${employee.name} ${employee.lastname1} ${employee.lastname2}<p>
+                            <p><b>Boss </b>${val.boss}</p>
+
+                        </div>
+                    </div>
+                </div>
+        `
+            
+        });
+    
+    }
+
+//TERCERA PARTE DE LAS MULTITTABLAS---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //3.1  Devuelve un listado que muestre solamente los clientes que no han realizado ningún pago. 
     async getAllclientsNotPaymentsDesign(){
         let data = await getAllclientsNotPayments();
@@ -234,16 +265,43 @@ async getProductsNeverOrderedDesign(){
                 </div>
                 <div class="card__body">
                     <div class="body__marck">
-                        <p><b>Codigo: </b>${val.client_code}</p>
-                        <p><b>Nombre de cliente: </b>${val.client_name}
-
-
+                        <p><b>Nombre del pedido: </b>${val.name}</p>
+                        
                     </div>
                 </div>
             </div>
 `
 });
 }
+
+//3.9
+async getProductsNotOrderedDesign(){
+    let data = await getProductsNotOrdered();
+    console.log(await getProductsNotOrdered());
+    data.forEach(val => {
+        this.shadowRoot.innerHTML += /*html*/`
+            <div class="report__card">
+                <div class="card__title">
+                    <p> Productos nunca pedidos : </p>
+                    <div>${val.code_product }</div> 
+                    
+                </div>
+                <div class="card__body">
+                    <div class="body__marck">
+                        <p><b>Nombre del pedido: </b>${val.name}</p>
+                        <p><b>description: </b>${val.description}</p>
+                        <p><b>Image: </b>${val.image}</p>
+                        
+                    </div>
+                </div>
+            </div>
+`
+});
+}
+
+//3.10
+//3.11
+
 
 
 
@@ -262,9 +320,12 @@ async getProductsNeverOrderedDesign(){
         if(name=="logic" && now=="client_3.3") this.getAllclientsNotRequestsAndNotPaymentsDesign()
         
 
-         
+        if(name=="logic" && now=="employe_2.8") this.getAllEmpleyeesAndBossDesign()
+
             
         if(name=="logic" && now=="product_3.8") this.getProductsNeverOrderedDesign()
+        if(name=="logic" && now=="product_3.9") this.getProductsNotOrderedDesign()
+
 
 
 
