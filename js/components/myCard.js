@@ -9,7 +9,9 @@ import {
 // import {
 //     getAllEmployNotClients 
 // } from "../module/employees.js";
+//PRIMERA PARTE DE LAS CONSULTAS
 
+//16.
 export class Mycard extends HTMLElement{
     constructor(){
         super();
@@ -38,6 +40,8 @@ export class Mycard extends HTMLElement{
         });
     }
 
+
+//SEGUNDA PARTE DE LAS MULTITABLA---------------------------------------------------------------------------
 //2.1 1. Obtén un listado con el nombre de cada cliente y el nombre y apellido de su representante de ventas.
     async getAllClientsAndSalesManagersDesign(){
         let data = await getAllClientsAndSalesManagers();
@@ -127,7 +131,8 @@ export class Mycard extends HTMLElement{
         });
     }
 
-    
+//TERCERA PARTE DE LAS MULTITTABLAS--------------------------------------------------------------------------------
+
     // async getAllClientsFromCityAndCodeDesign(){
     //     let data = await getAllClientsFromCityAndCode();
     //     data.forEach(val => {
