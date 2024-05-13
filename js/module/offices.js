@@ -34,7 +34,7 @@ export const getAllOffices = async(codeOffice)=>{
 
 //2.6. Lista la dirección de las oficinas que tengan clientes en `Fuenlabrada`.
 export const AllDirectionsWithClientsInFuenlabrada = async()=>{
-    let clients = await fetch("http://localhost:5501/clients?city=Fuenlabrada").then(response => response.json())
+    let clients = await fetch("http://localhost:5510/clients?city=Fuenlabrada").then(response => response.json())
     let offices = await fetch("http://localhost:5504/offices").then(response => response.json())
 
     let dataUpdate = []

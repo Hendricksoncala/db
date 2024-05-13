@@ -14,12 +14,13 @@ import {
       from "./module/clients.js";
 import {
   AllDirectionsWithClientsInFuenlabrada
+  
 } from "./module/offices.js"
 
 import {
   getAllEmpleyeesAndBoss
 } from "./module/employees.js"
 
-console.log(await getAllEmpleyeesAndBoss())
+console.log(await AllDirectionsWithClientsInFuenlabrada())
 
 

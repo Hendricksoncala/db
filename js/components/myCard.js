@@ -7,7 +7,8 @@ import {
     getAllClientsAndSalesManagerNameAndIfThereIsPaymentsAndCity,
     getAllclientsNotPayments,
     getAllclientsNotRequests,
-    getAllclientsNotRequestsAndNotPayments
+    getAllclientsNotRequestsAndNotPayments,
+    getAllClientsAndSalesManagerNameAndIfThereWhoDontPaymentAndCity,
 } from "../module/clients.js";
 
 import {
@@ -20,6 +21,10 @@ import {
     getProductsNeverOrdered,
     getProductsNotOrdered
 } from "../module/product.js";
+
+import {
+    AllDirectionsWithClientsInFuenlabrada
+}   from "../module/offices.js"
 //PRIMERA PARTE DE LAS CONSULTAS
 
 //16.
@@ -143,8 +148,38 @@ export class Mycard extends HTMLElement{
     }
 
 
-//2.5
-//2.6
+//2.5 Devuelve el nombre de los clientes que **no** hayan hecho pagos y el nombre de sus representantes junto con la ciudad de la oficina a la que pertenece el representante.
+    async getAllClientsAndSalesManagerNameAndIfThereWhoDontPaymentAndCityDesign(){
+        let data = await getAllClientsAndSalesManagerNameAndIfThereWhoDontPaymentAndCity();
+        console.log(await getAllClientsAndSalesManagerNameAndIfThereWhoDontPaymentAndCity());
+        data.forEach(val => {
+            this.shadowRoot.innerHTML += /*html*/`
+                <div class="report__card">
+                    <div class="card__title">
+                        <div>${val.ClientsName}</div>
+                    </div>
+                    <div class="card__body">
+                        <div class="body__marck">
+                            <p><b>Cliente: </b>${val.ClientsName}</p>
+                            <p><b>Representante de Ventas: </b>${val.manager}</p>
+                            <p><b>Ciudad de Oficina </b>${val.cityoffice}</p>
+
+                        </div>
+                    </div>
+                </div>
+        `
+            
+        });
+    }
+//2.6. Lista la dirección de las oficinas que tengan clientes en `Fuenlabrada`.
+    async AllDirectionsWithClientsInFuenlabrada(){
+        let data = await AllDirectionsWithClientsInFuenlabrada();
+        console.log( await AllDirectionsWithClientsInFuenlabrada());
+        data.forEach(val => {
+            
+        });
+    }
+
 //2.7
 //2.8 Devuelve un listado con el nombre de los empleados junto con el nombre de sus jefes.
     async getAllEmpleyeesAndBossDesign(){
@@ -309,20 +344,23 @@ async getProductsNotOrderedDesign(){
         return ["logic"];
     }
     attributeChangedCallback(name, old, now) {
+        /*PARTE DE CLIENTES*/
         if(name=="logic" && now=="client_16") this.getClientsEmployDesign()
         if(name=="logic" && now=="client_7") this.getAllDesign()
         if(name=="logic" && now=="client_2.1") this.getAllClientsAndSalesManagersDesign()
         if(name=="logic" && now=="client_2.2") this.getAllClientsAndSalesManagerNameAndIfThereIsPaymentsDesign()
         if(name=="logic" && now=="client_2.3") this.getAllClientsWithoutPaymentsAndSalesManagerNameDesign()
         if(name=="logic" && now=="client_2.4") this.getAllClientsAndSalesManagerNameAndIfThereIsPaymentsAndCityDesign()
+        if(name=="logic" && now=="client_2.5") this.getAllClientsAndSalesManagerNameAndIfThereWhoDontPaymentAndCityDesign()
         if(name=="logic" && now=="client_3.1") this.getAllclientsNotPaymentsDesign()
         if(name=="logic" && now=="client_3.2") this.getAllclientsNotRequestsDesign()
         if(name=="logic" && now=="client_3.3") this.getAllclientsNotRequestsAndNotPaymentsDesign()
-        
-
-        if(name=="logic" && now=="employe_2.8") this.getAllEmpleyeesAndBossDesign()
 
             
+        /*PARTE DE EMPLEADOS*/ 
+        if(name=="logic" && now=="employe_2.8") this.getAllEmpleyeesAndBossDesign()
+
+        /*PARTE DE PRODUCTOS*/
         if(name=="logic" && now=="product_3.8") this.getProductsNeverOrderedDesign()
         if(name=="logic" && now=="product_3.9") this.getProductsNotOrderedDesign()
 
