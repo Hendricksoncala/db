@@ -9,12 +9,15 @@ import {
     getAllclientsNotRequests,
     getAllclientsNotRequestsAndNotPayments,
     getAllClientsAndSalesManagerNameAndIfThereWhoDontPaymentAndCity,
+
 } from "../module/clients.js";
 
 import {
     getAllEmpleyeesAndBoss,
     getAllEmployeesAndBossOfBoss,
     getEmployeesWithoutOfficeAndClients,
+    
+    
 } from "../module/employees.js";
 
 import {
@@ -193,7 +196,7 @@ export class Mycard extends HTMLElement{
                     </div>
                     <div class="card__body">
                         <div class="body__marck">
-                            <p><b>Empleado: </b>${employee.name} ${employee.lastname1} ${employee.lastname2}<p>
+                            <p><b>Empleado: </b>${val.employee}<p>
                             <p><b>Boss </b>${val.boss}</p>
 
                         </div>
@@ -203,6 +206,35 @@ export class Mycard extends HTMLElement{
             
         });
     
+    }
+
+    //2.9
+    async getAllEmployeesAndBossOfBossDesign(){
+        let data = await getAllEmployeesAndBossOfBoss();
+        console.log(await getAllEmployeesAndBossOfBoss());
+        data.forEach(val => {
+            this.shadowRoot.innerHTML += /*html*/`
+                <div class="report__card">
+                    <div class="card__title">
+                        <div>${val.employee}</div>
+                    </div>
+                    <div class="card__body">
+                        <div class="body__marck">
+                            <p><b>Empleado: </b>${val.employee}</p>
+                            <p><b>Boss: </b>${val.boss}</p>
+                            <p><b>bossOfBoss: </b>${val.bossOfBoss}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    //2.10
+    async getEmployeesWithoutOfficeAndClientsDesign(){
+        let data = await getEmployeesWithoutOfficeAndClients();
+        console.log(await getEmployeesWithoutOfficeAndClients());
+        
     }
 
 //TERCERA PARTE DE LAS MULTITTABLAS---------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -237,10 +269,7 @@ export class Mycard extends HTMLElement{
         data.forEach(val => {
             this.shadowRoot.innerHTML += /*html*/`
                 <div class="report__card">
-                    <div class="card__title">
-                        <p> Ningun pedido : </p>
-                        <div>${val.client_name }</div> 
-                        
+                    <div class="card__title">getAllEmployeesAndBossOfBoss
                     </div>
                     <div class="card__body">
                         <div class="body__marck">
@@ -352,6 +381,15 @@ async getProductsNotOrderedDesign(){
         if(name=="logic" && now=="client_2.3") this.getAllClientsWithoutPaymentsAndSalesManagerNameDesign()
         if(name=="logic" && now=="client_2.4") this.getAllClientsAndSalesManagerNameAndIfThereIsPaymentsAndCityDesign()
         if(name=="logic" && now=="client_2.5") this.getAllClientsAndSalesManagerNameAndIfThereWhoDontPaymentAndCityDesign()
+        // if(name=="logic" && now=="client_2.6") this.
+        // if(name=="logic" && now=="client_2.7") this.
+
+
+        if(name=="logic" && now=="employ_2.8") this.getAllEmpleyeesAndBossDesign()
+        if(name=="logic" && now=="employ_2.9") this.getAllEmployeesAndBossOfBossDesign()
+ 
+
+
         if(name=="logic" && now=="client_3.1") this.getAllclientsNotPaymentsDesign()
         if(name=="logic" && now=="client_3.2") this.getAllclientsNotRequestsDesign()
         if(name=="logic" && now=="client_3.3") this.getAllclientsNotRequestsAndNotPaymentsDesign()

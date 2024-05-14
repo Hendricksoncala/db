@@ -19,6 +19,8 @@ btn.forEach(val =>{
                 <my-details logic="client_2.3"text= "2.3 Muestra el nombre de los clientes que **no** hayan realizado pagos junto con el nombre de sus representantes de ventas."></my-details>
                 <my-details logic="client_2.4"text= "2.4 Devuelve el nombre de los clientes que han hecho pagos y el nombre de sus representantes junto con la ciudad de la oficina a la que pertenece el representante."></my-details>
                 <my-details logic="client_2.5"text= "2.5 Devuelve el nombre de los clientes que **no** hayan hecho pagos y el nombre de sus representantes junto con la ciudad de la oficina a la que pertenece el representante."></my-details>
+
+
                 <my-details logic="client_3.1"text= "3.1 Devuelve un listado que muestre solamente los clientes que no han realizado ningún pago."></my-details>
                 <my-details logic="client_3.2"text= "3.2 Devuelve un listado que muestre solamente los clientes que no han realizado ningún pedido."></my-details>
                 <my-details logic="client_3.3"text= "3.3 Devuelve un listado que muestre los clientes que no han realizado ningún pago y los que no han realizado ningún pedido."></my-details>
@@ -28,7 +30,8 @@ btn.forEach(val =>{
         }
         if(e.target.innerHTML=="employees"){
             report__details.innerHTML = /*html*/`
-                <my-details logic="employ_2.9" text="2.8 Devuelve un listado con el nombre de los empleados junto con el nombre de sus jefes."></my-details>
+                <my-details logic="employ_2.8"text="2.8 Devuelve un listado con el nombre de los empleados junto con el nombre de sus jefes."></my-details>
+                <my-details logic="employ_2.9"text="2.9 Devuelve un listado que muestre el nombre de cada empleados,el nombre de su jefe y el nombre del jefe de sus jefe. "></my-details>
             
             `;
         }

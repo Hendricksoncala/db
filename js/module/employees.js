@@ -90,50 +90,47 @@ export const getAllEmpleyeesAndBoss = async() =>{
 
 //2.9  Devuelve un listado que muestre el nombre de cada empleados,
 //el nombre de su jefe y el nombre del jefe de sus jefe. (FALTA ARREGLARLO TIRA UNDEFINED)
-export const getAllEmployeesAndBossOfBoss = async()=>{
-    let res = await fetch("http://localhost:5502/employee")
-    let employees = await res.json();
+export const getAllEmployeesAndBossOfBoss = async () => {
+    try {
+        const res = await fetch("http://localhost:5502/employee");
+        const employees = await res.json();
 
-    const bossMap = new Map();
+        const bossMap = new Map();
 
-    const getBossName = async(employee_code)=>{
-        if(employee_code == null){
-            return "N/A"
-        }
-        const bossRes = await fetch(`http://localhost:5502/employee/${employee_code}`);
-        const bossData = await bossRes.json();
-        const bossName = `${bossData.name} ${bossData.lastname1} ${bossData.lastname2}`;
-        bossMap.set(employee_code, bossName);
-        return bossName;
-    }
+        const getBossName = async (employee_code) => {
+            if (employee_code == null) {
+                return "N/A";
+            }
+            const bossRes = await fetch(`http://localhost:5502/employee/${employee_code}`);
+            const bossData = await bossRes.json();
+            const bossName = `${bossData.name} ${bossData.lastname1} ${bossData.lastname2}`;
+            bossMap.set(employee_code, bossName);
+            return bossName;
+        };
 
-    const getEmployeesWithBosses = async () => {
-        const employeesWithBosses = [];
-        for (const employee of employees) {
+        const employeesWithBosses = await Promise.all(employees.map(async (employee) => {
             const bossName = await getBossName(employee.code_boss);
             const employeeName = `${employee.name} ${employee.lastname1} ${employee.lastname2}`;
-            employeesWithBosses.push({ employee: employeeName, boss: bossName });
-        }
-        return employeesWithBosses;
-    };
+            return { employee: employeeName, boss: bossName };
+        }));
 
-    const employeesWithBosses = await getEmployeesWithBosses();
+        const mapEmployeesAndBossesRecursively = (employeesWithBosses) => {
+            return employeesWithBosses.map(({ employee, boss }) => {
+                const bossOfBoss = bossMap.get(boss.split(" ")[0]);
+                return {
+                    employee,
+                    boss,
+                    bossOfBoss: bossOfBoss ? bossOfBoss : "N/A"
+                };
+            });
+        };
 
-    const mapEmployeesAndBossesRecursively = (employeesWithBosses) => {
-        return employeesWithBosses.map(({ employee, boss }) => {
-            const bossOfBoss = bossMap.get(boss.split(" ")[0]);
-            return {
-                employee,
-                boss,
-                bossOfBoss: bossOfBoss ? bossOfBoss : "N/A"
-            };
-        });
-    };
-
-    return mapEmployeesAndBossesRecursively(employeesWithBosses)
-}
-
-
+        return mapEmployeesAndBossesRecursively(employeesWithBosses);
+    } catch (error) {
+        console.error("Error al obtener los empleados y sus jefes:", error);
+        throw error; // Relanzar el error para manejarlo en un nivel superior
+    }
+};
 
 //3.10
 export const getEmployeesWithoutOfficeAndClients = async() =>{

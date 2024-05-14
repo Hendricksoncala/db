@@ -36,7 +36,6 @@ export const getAllOffices = async(codeOffice)=>{
 export const AllDirectionsWithClientsInFuenlabrada = async()=>{
     let clients = await fetch("http://localhost:5510/clients?city=Fuenlabrada").then(response => response.json())
     let offices = await fetch("http://localhost:5504/offices").then(response => response.json())
-
     let dataUpdate = []
 
     clients.forEach(client => {

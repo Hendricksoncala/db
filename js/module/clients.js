@@ -19,70 +19,79 @@ export const getAllClientsFromCityAndCode = async()=>{
 // Consultas multitabla
 // 2.7. Devuelve el nombre de los clientes y el nombre de sus representantes
 // junto con la ciudad de la oficina a la que pertenece el representante.
-export const getAll = async()=>{
+export const getAll = async () => {
+  try {
+      // Obtener todos los clientes
+      const res = await fetch("http://localhost:5510/clients");
+      const clients = await res.json();
 
-    let res = await fetch("http://localhost:5510/clients")
-    let client = await res.json();
-    for (let i = 0; i < client.length; i++) {
-        // Actualiza la data clientes eliminando identificadores que no queremos
-        let {  
-            id:id_client,
-            limit_credit,
-            postal_code:postal_code_client,
-            country:country_client,
-            region:region_client,
-            city,
-            address2:address2_client,
-            address1:address1_client,
-            fax,
-            phone,
-            ...clientUpdate} = client[i]
-            client[i] = clientUpdate
-        // Realizamos la consulta al fucion modular de los empleados para buscar
-        // la informacion del empleado segun su id de la data cliente anterior
-        // buscada
-        let [employee] = await getEmployeesByCode(clientUpdate.code_employee_sales_manager)
-        
-        let {
-            id:id_employee,
-            extension,
-            email,
-            code_boss,
-            position,
-            ...employeeUpdate
-        } = employee
-        let [office] = await getOfficesByCode(employeeUpdate.code_office)
-        let {
-            id:id_office,
-            country,
-            region,
-            postal_code,
-            movil,
-            address1,
-            address2,
-            ...officeUpdate
-        } = office
-        let data = {...clientUpdate, ...employeeUpdate, ...officeUpdate}
-        // {  
-        //     client_code: 38,
-        //     client_name: 'El Jardin Viviente S.L',
-        //     contact_name: 'Justin'hola
-        //     name: 'Mariko',
-        //     lastname1: 'Kishi',
-        //     lastname2: '',
-        //     code_office: 'SYD-AU',
-        //     city: 'Sydney'
-        //   }
-        client[i] = {
-            client_name: `${data.client_name}`,
-            employees_full_name: `${data.name} ${data.lastname1} ${data.lastname2}`,
-            employees_office_code: data.code_office,
-            city_employees: data.city
-        }
-        
-    }
-    return client;
-}
+      // Array para almacenar los datos actualizados de los clientes
+      const updatedClients = [];
+
+      // Iterar sobre cada cliente
+      for (const client of clients) {
+          // Desestructurar los datos del cliente y eliminar identificadores no deseados
+          const {
+              id: id_client,
+              limit_credit,
+              postal_code: postal_code_client,
+              country: country_client,
+              region: region_client,
+              city,
+              address2: address2_client,
+              address1: address1_client,
+              fax,
+              phone,
+              ...clientData
+          } = client;
+
+          // Obtener la información del empleado según el código del empleado de ventas del cliente
+          const [employee] = await getEmployeesByCode(clientData.code_employee_sales_manager);
+
+          // Desestructurar los datos del empleado y eliminar identificadores no deseados
+          const {
+              id: id_employee,
+              extension,
+              email,
+              code_boss,
+              position,
+              ...employeeData
+          } = employee;
+
+          // Obtener la información de la oficina según el código de la oficina del empleado
+          const [office] = await getOfficesByCode(employeeData.code_office);
+
+          // Desestructurar los datos de la oficina y eliminar identificadores no deseados
+          const {
+              id: id_office,
+              country,
+              region,
+              postal_code,
+              movil,
+              address1,
+              address2,
+              ...officeData
+          } = office;
+
+          // Combinar los datos del cliente, empleado y oficina
+          const updatedClient = {
+              client_name: clientData.client_name,
+              employee_full_name: `${employeeData.name} ${employeeData.lastname1} ${employeeData.lastname2}`,
+              employee_office_code: employeeData.code_office,
+              employee_city: officeData.city
+          };
+
+          // Agregar el cliente actualizado al array de clientes actualizados
+          updatedClients.push(updatedClient);
+      }
+
+      // Devolver el array de clientes actualizados
+      return updatedClients;
+  } catch (error) {
+      console.error("Error al obtener los clientes:", error);
+      throw error; // Relanzar el error para manejarlo en un nivel superior
+  }
+};
 
 
 //2.1 1. Obtén un listado con el nombre de cada cliente y el nombre y apellido de su representante de ventas.
