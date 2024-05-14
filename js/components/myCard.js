@@ -16,7 +16,9 @@ import {
     getAllEmpleyeesAndBoss,
     getAllEmployeesAndBossOfBoss,
     getEmployeesWithoutOfficeAndClients,
-    getAllFullNameAndEmailsAndBoss
+    getAllFullNameAndEmailsAndBoss,
+    getBossFullNameAndEmail,
+    getAllFullnamePositionDiferentSalesRepresentative
     
     
 } from "../module/employees.js";
@@ -91,6 +93,68 @@ export class Mycard extends HTMLElement{
     async getAllFullNameAndEmailsAndBossDesign(){
         let data = await getAllFullNameAndEmailsAndBoss();
         console.log(await getAllFullNameAndEmailsAndBoss());
+        data.forEach(val => {
+            this.shadowRoot.innerHTML += /*html*/`
+                <div class="report__card">
+                    <div class="card__title">
+                        <div>${val.name}</div>
+                    </div>
+                    <div class="card__body">
+                        <div class="body__marck">
+                            <p><b>Nombre: </b>${val.name}</p>
+                            <p><b>Nombre Completo: </b>${val.fullLastname}</p>
+                            <p><b>email: </b>${val.email}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+//4.Devuelve el nombre del puesto, nombre, apellidos y email del jefe de la empresa.
+    async getBossFullNameAndEmailDesign(){
+        let data = await getBossFullNameAndEmail();
+        console.log(await getBossFullNameAndEmail());
+        data.forEach(val => {
+            this.shadowRoot.innerHTML += /*html*/`
+                <div class="report__card">
+                    <div class="card__title">
+                        <div>${val.name}</div>
+                    </div>
+                    <div class="card__body">
+                        <div class="body__marck">
+                            <p><b>position: </b>${val.position}</p>
+                            <p><b>Nombre: </b>${val.name}</p>
+                            <p><b>Nombre Completo: </b>${val.fullLastname}</p>
+                            <p><b>email: </b>${val.email}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+//5 Devuelve un listado con el nombre, apellidos y puesto de aquellos empleados que no sean representantes de ventas.
+    async getAllFullnamePositionDiferentSalesRepresentativeDesign(){
+        let data = await getAllFullnamePositionDiferentSalesRepresentative();
+        console.log(await getAllFullnamePositionDiferentSalesRepresentative());
+        data.forEach(val => {
+            this.shadowRoot.innerHTML += /*html*/`
+                <div class="report__card">
+                    <div class="card__title">
+                        <div>${val.name}</div>
+                    </div>
+                    <div class="card__body">
+                        <div class="body__marck">
+                            <p><b>position: </b>${val.position}</p>
+                            <p><b>Nombre: </b>${val.name}</p>
+                            <p><b>Nombre Completo: </b>${val.fullLastname}</p>
+
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
     }
 
 //16
@@ -443,7 +507,10 @@ async getProductsNotOrderedDesign(){
         // if(name=="logic" && now=="client_2.6") this.
         // if(name=="logic" && now=="client_2.7") this.
 
-
+        
+        if(name=="logic" && now=="employ_3") this.getAllFullNameAndEmailsAndBossDesign()
+        if(name=="logic" && now=="employ_4") this.getBossFullNameAndEmailDesign()
+        if(name=="logic" && now=="employ_5") this.getAllFullnamePositionDiferentSalesRepresentativeDesign()
         if(name=="logic" && now=="employ_2.8") this.getAllEmpleyeesAndBossDesign()
         if(name=="logic" && now=="employ_2.9") this.getAllEmployeesAndBossOfBossDesign()
  

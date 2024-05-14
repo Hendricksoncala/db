@@ -22,11 +22,12 @@ import {
   getAllEmpleyeesAndBoss,
   getAllEmployeesAndBossOfBoss,
   getEmployeesWithoutOfficeAndClients,
-  getAllFullNameAndEmailsAndBoss
+  getAllFullNameAndEmailsAndBoss,
+  getAllFullnamePositionDiferentSalesRepresentative
   
 
 } from "./module/employees.js"
 
-console.log(await getAllFullNameAndEmailsAndBoss())
+console.log(await getAllFullnamePositionDiferentSalesRepresentative())
 
 
