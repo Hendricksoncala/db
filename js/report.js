@@ -13,6 +13,8 @@ btn.forEach(val =>{
         
         if(e.target.innerHTML=="clients"){
             report__details.innerHTML = /*html*/`
+
+
                 <my-details logic="client_16" text="16. Devuelve un listado con todos los clientes que sean de la ciudad de Madrid y cuyo representante de ventas tenga el código de empleado 11 o 30."></my-details>
                 <my-details logic="client_2.1" text="2.1  Obtén un listado con el nombre de cada cliente y el nombre y apellido de su representante de ventas."></my-details>
                 <my-details logic="client_2.2"text= "2.2 Muestra el nombre de los clientes que hayan realizado pagos junto con el nombre de sus representantes de ventas."></my-details>
@@ -39,6 +41,13 @@ btn.forEach(val =>{
             report__details.innerHTML = /*html*/`
                 <my-details logic="product_3.8" text="3.8 Devuelve un listado de los productos que nunca han aparecido en un pedido."></my-details>
                 <my-details logic="product_3.9" text="3.9 DDevuelve un listado de los productos que nunca han aparecido en un pedido. El resultado debe mostrar el nombre, la descripción y la imagen del producto."></my-details>
+
+            `;
+        }
+        if(e.target.innerHTML=="offices"){
+            report__details.innerHTML = /*html*/`
+            <my-details logic="office_1" text="1.Devuelve un listado con el código de oficina y la ciudad donde hay oficinas."></my-details>
+            <my-details logic="office_2" text="2. Devuelve un listado con la ciudad y el teléfono de las oficinas de España."></my-details>
 
             `;
         }

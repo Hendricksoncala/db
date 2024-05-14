@@ -17,7 +17,7 @@ export const getAllEmployeeNames = async(code)=>{
 // 3. Devuelve un listado con el nombre, apellidos y email de los empleados 
 // cuyo jefe tiene un código de jefe igual a 7.
 export const getAllFullNameAndEmailsAndBoss = async() =>{
-    let res = await fetch("http://localhost:5502/employees?code_boss=7")
+    let res = await fetch("http://localhost:5502/employee?code_boss=7")
     let data = await res.json();
     let dataUpdate = data.map(val=>{
         return {

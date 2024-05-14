@@ -8,12 +8,13 @@ import {
      getClientsWithDelayedOrders,
      getProductGamasByClient,
      getAllclientsNotPayments,
-     
+ 
 
     }
       from "./module/clients.js";
 import {
-  AllDirectionsWithClientsInFuenlabrada
+  AllDirectionsWithClientsInFuenlabrada,
+  getAllOficceAndCodeCity,
   
 } from "./module/offices.js"
 
@@ -21,9 +22,11 @@ import {
   getAllEmpleyeesAndBoss,
   getAllEmployeesAndBossOfBoss,
   getEmployeesWithoutOfficeAndClients,
-  displayEmployeesWithoutOfficeAndClients
+  getAllFullNameAndEmailsAndBoss
+  
+
 } from "./module/employees.js"
 
-console.log(await displayEmployeesWithoutOfficeAndClients())
+console.log(await getAllFullNameAndEmailsAndBoss())
 
 

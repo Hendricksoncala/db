@@ -16,6 +16,7 @@ import {
     getAllEmpleyeesAndBoss,
     getAllEmployeesAndBossOfBoss,
     getEmployeesWithoutOfficeAndClients,
+    getAllFullNameAndEmailsAndBoss
     
     
 } from "../module/employees.js";
@@ -26,11 +27,15 @@ import {
 } from "../module/product.js";
 
 import {
+    getAllOficceAndCodeCity,
+    getAllOficceCityAndMovil,
     AllDirectionsWithClientsInFuenlabrada
 }   from "../module/offices.js"
-//PRIMERA PARTE DE LAS CONSULTAS
+//PRIMERA PARTE DE LAS CONSULTAS------------------------------------------------------
 
-//16.
+
+
+//
 export class Mycard extends HTMLElement{
     constructor(){
         super();
@@ -39,6 +44,56 @@ export class Mycard extends HTMLElement{
             <link rel="stylesheet" href="../css/myCard.css">  
         `
     }
+
+
+//1. Devuelve un listado con el código de oficina y la ciudad 
+// donde hay oficinas.
+    async getAllOficceAndCodeCityDesign(){
+        let data = await getAllOficceAndCodeCity();
+        console.log(await getAllOficceAndCodeCity());
+        data.forEach(val => {
+            this.shadowRoot.innerHTML += /*html*/`
+                <div class="report__card">
+                    <div class="card__title">
+                        <div>${val.client_name}</div>
+                    </div>
+                    <div class="card__body">
+                        <div class="body__marck">
+                            <p><b>Codigo de Oficina: </b>${val.code_office}</p>
+                            <p><b>Ciudad: </b>${val.city}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+    }
+//2. Devuelve un listado con la ciudad y el teléfono de las oficinas de España.
+    async getAllOficceCityAndMovilDesign(){
+        let data = await getAllOficceCityAndMovil();
+        console.log(await getAllOficceCityAndMovil());
+        data.forEach(val => {
+            this.shadowRoot.innerHTML += /*html*/`
+                <div class="report__card">
+                    <div class="card__title">
+                        <div>${val.client_name}</div>
+                    </div>
+                    <div class="card__body">
+                        <div class="body__marck">
+                            <p><b>Codigo de Oficina: </b>${val.code_office}</p>
+                            <p><b>Telefono: </b>${val.movil}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+    }
+//3. Devuelve un listado con el nombre, apellidos y email de los empleados cuyo jefe tiene un código de jefe igual a 7.
+    async getAllFullNameAndEmailsAndBossDesign(){
+        let data = await getAllFullNameAndEmailsAndBoss();
+        console.log(await getAllFullNameAndEmailsAndBoss());
+    }
+
+//16
     async getClientsEmployDesign(){
         let data = await getAllClientsFromCityAndCode();
         console.log(await getAllClientsFromCityAndCode())
@@ -374,6 +429,10 @@ async getProductsNotOrderedDesign(){
     }
     attributeChangedCallback(name, old, now) {
         /*PARTE DE CLIENTES*/
+        if(name=="logic" && now=="office_1") this.getAllOficceAndCodeCityDesign()
+        if(name=="logic" && now=="office_2") this.getAllOficceCityAndMovilDesign()
+
+
         if(name=="logic" && now=="client_16") this.getClientsEmployDesign()
         if(name=="logic" && now=="client_7") this.getAllDesign()
         if(name=="logic" && now=="client_2.1") this.getAllClientsAndSalesManagersDesign()
