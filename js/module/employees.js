@@ -131,6 +131,30 @@ export const getAllEmployeesAndBossOfBoss = async () => {
         throw error; // Relanzar el error para manejarlo en un nivel superior
     }
 };
+//3.4. Devuelve un listado que muestre solamente los empleados que no tienen una oficina asociada.
+export const getAllEmployeesThatDontHaveOffice = async()=>{
+    let res=await fetch("http://localhost:5502/employee")
+    let dataEmployees =await res.json();
+    let dataUpdate = [];
+    dataEmployees.forEach(val=>{
+        if(val.code_office === null) dataUpdate.push(val)
+    })
+    return dataUpdate;
+}
+
+//3.5. Devuelve un listado que muestre solamente los empleados que no tienen un cliente asociado.
+export const getAllEmployeesThatArentAssociatedWithAnyClient = async()=>{
+    let res=await fetch("http://localhost:5502/employee")
+    let data =await res.json();
+    let dataUpdate = [];
+    for(let i=0; i<data.length; i++){
+        let [ client ] = await getAllClientsByManagerCode(data[i].employee_code);
+        if(client === undefined){
+            dataUpdate.push(data[i]);
+        }
+    }
+    return dataUpdate;
+}
 
 //3.10
 export const getEmployeesWithoutOfficeAndClients = async() =>{

@@ -8,6 +8,7 @@ import {
      getClientsWithDelayedOrders,
      getProductGamasByClient,
      getAllclientsNotPayments,
+     getAllClientsWhoHaveRequestedButHaventPaid
  
 
     }
@@ -23,11 +24,21 @@ import {
   getAllEmployeesAndBossOfBoss,
   getEmployeesWithoutOfficeAndClients,
   getAllFullNameAndEmailsAndBoss,
-  getAllFullnamePositionDiferentSalesRepresentative
+  getBossFullNameAndEmail,
+  getAllEmployeesThatDontHaveOffice,
+  getAllEmployeesThatArentAssociatedWithAnyClient
+  ,
   
 
 } from "./module/employees.js"
 
-console.log(await getAllFullnamePositionDiferentSalesRepresentative())
+import {
+
+  getProductsNeverOrdered,
+  getProductsNotOrdered
+
+} from "./module/product.js"
+
+console.log(await getAllClientsWhoHaveRequestedButHaventPaid())
 
 
