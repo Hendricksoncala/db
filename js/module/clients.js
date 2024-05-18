@@ -410,7 +410,7 @@ export const getAllclientsNotRequestsAndNotPayments = async() =>{
 }
 
 
-//3.11 Devuelve un listado con los clientes que han realizado algún pedido pero no han realizado ningún pago. YA HECHO
+//3.11 Devuelve un listado con los clientes que han realizado algún pedido pero no han realizado ningún pago. 
 export const getAllClientsWhoHaveRequestedButHaventPaid = async()=>{
   let res = await fetch(`http://localhost:5510/clients`)
   let data = await res.json();

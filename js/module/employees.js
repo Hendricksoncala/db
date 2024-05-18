@@ -224,3 +224,40 @@ export const getEmployeesWithoutOfficeAndClients = async() =>{
         employeesWithoutClients: employeesWithoutClients
     };
 }
+
+
+//12. Devuelve un listado con los datos de los empleados que no tienen clientes asociados y el nombre de su jefe asociado.
+export const getAllEmployeesThatArentAssociatedWithAnyClientAndHisBossName=async()=>{
+    let dataClients = await getAllClients();
+    let dataEmployees = await getAllEmployee();
+    let code_employee_sales_manager = [...new Set(dataClients.map(val => val.code_employee_sales_manager))];
+    let employee_code = dataEmployees.map(val => val.employee_code);
+    let codes = [
+        code_employee_sales_manager,
+        employee_code
+    ];
+    let code = codes.reduce((resultado, array) => resultado.filter(elemento => !array.includes(elemento)).concat(array.filter(elemento => !resultado.includes(elemento))));
+    let employees = [];
+    for(let i = 0; i < code.length; i++) {
+        let searchingEmployees = async() => await getAllEmployeeNames(code[i]);
+        let [ employee ] = await searchingEmployees();
+        if(!employee.code_boss) {
+            let {
+                code_boss,
+                ...employeeUpdate
+            } = employee
+            employeeUpdate.name_boss = employee.name;
+            employees.push(employeeUpdate);
+            continue
+        }
+        let searchedBoss = async() => await getAllEmployeeNames(employee.code_boss);
+        let [boos] = await searchedBoss();
+        let {
+            code_boss,
+            ...employeeUpdate
+        } = employee;
+        employeeUpdate.name_boss = boos.name;
+        employees.push(employeeUpdate);
+    }
+    return employees
+}

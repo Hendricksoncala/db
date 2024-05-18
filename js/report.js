@@ -28,6 +28,7 @@ btn.forEach(val =>{
                 <my-details logic="client_3.1"text= "3.1 Devuelve un listado que muestre solamente los clientes que no han realizado ningún pago."></my-details>
                 <my-details logic="client_3.2"text= "3.2 Devuelve un listado que muestre solamente los clientes que no han realizado ningún pedido."></my-details>
                 <my-details logic="client_3.3"text= "3.3 Devuelve un listado que muestre los clientes que no han realizado ningún pago y los que no han realizado ningún pedido."></my-details>
+                <my-details logic="client_3.11"text= "3.11 Devuelve un listado con los clientes que han realizado algún pedido pero no han realizado ningún pago."></my-details>
 
 
             `
@@ -45,6 +46,8 @@ btn.forEach(val =>{
                 <my-details logic="employ_3.5"text="3.5 Devuelve un listado que muestre solamente los empleados que no tienen un cliente asociado."></my-details>
                 <my-details logic="employ_3.6"text="3.6. Devuelve un listado que muestre solamente los empleados que no tienen un cliente asociado junto con los datos de la oficina donde trabajan."></my-details>
                 <my-details logic="employ_3.7"text="3.7. Devuelve un listado que muestre los empleados que no tienen una oficina asociada y los que no tienen un cliente asociado."></my-details>
+                <my-details logic="employ_3.10"text="3.10 Devuelve las oficinas donde no trabajan ninguno de los empleados que hayan sido los representantes de ventas de algún cliente que haya realizado la compra de algún producto de la gama Frutales."></my-details>
+                <my-details logic="employ_3.12"text="3.12. Devuelve un listado con los datos de los empleados que no tienen clientes asociados y el nombre de su jefe asociado."></my-details>
 
             `;
         }

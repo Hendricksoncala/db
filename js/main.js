@@ -31,6 +31,7 @@ import {
   getAllEmployeesThatDontHaveOffice,
   getAllEmployeesThatArentAssociatedWithAnyClient,
   getAllEmployeesThatArentAssociatedWithAnyClientOrOffice,
+  getAllEmployeesThatArentAssociatedWithAnyClientAndHisBossName
   
   
   
@@ -58,6 +59,7 @@ import {
   getAllFormsPayments,
 
 } from "./module/payment.js"
-console.log(await getProductsNotOrdered())
+
+console.log(await getAllEmployeesThatArentAssociatedWithAnyClientAndHisBossName())
 
 

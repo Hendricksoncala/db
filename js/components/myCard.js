@@ -11,6 +11,7 @@ import {
     getAllClientsAndSalesManagerNameAndIfThereWhoDontPaymentAndCity,
     getAllSpanishClients,
     getAllClientsInFuenlabrada,
+    getAllClientsWhoHaveRequestedButHaventPaid,
 
 } from "../module/clients.js";
 
@@ -24,7 +25,8 @@ import {
     getAllEmployeesThatDontHaveOffice,
     getAllEmployeesThatArentAssociatedWithAnyClient,
     getAllEmployeesThatArentAssociatedWithAnyClientAndDataOfHisOffice,
-    
+    getAllEmployeesThatArentAssociatedWithAnyClientOrOffice,
+    getAllEmployeesThatArentAssociatedWithAnyClientAndHisBossName,
     
     
 } from "../module/employees.js";
@@ -749,7 +751,29 @@ export class Mycard extends HTMLElement{
     
     }
 //3.7 Devuelve un listado que muestre los empleados que no tienen una oficina asociada y los que no tienen un cliente asociado.
+async getAllEmployeesThatArentAssociatedWithAnyClientOrOfficeDesign(){
+    let data = await getAllEmployeesThatArentAssociatedWithAnyClientOrOffice();
+    console.log(await getAllEmployeesThatArentAssociatedWithAnyClientOrOffice());
+    data.forEach(val => {
+        this.shadowRoot.innerHTML += /*html*/`
+            <div class="report__card">
+                <div class="card__title">
+                    <p> SIn oficina : </p>
 
+                    
+                </div>
+                <div class="card__body">
+                    <div class="body__marck">
+                        <p><b>Empleado: </b>${val.name}</p>
+                        <p><b>Codigo: </b>${val.employee_code}</p>
+
+                    </div>
+                </div>
+            </div>
+`
+});
+
+}
 
 
 //3.8 Devuelve un listado de los productos que nunca han aparecido en un pedido.
@@ -800,9 +824,81 @@ async getProductsNotOrderedDesign(){
 });
 }
 
-//3.10
-//3.11
+//3.10 Devuelve las oficinas donde no trabajan ninguno de los empleados que hayan sido los representantes de ventas de algún cliente que haya realizado la compra de algún producto de la gama Frutales.
+    async getEmployeesWithoutOfficeAndClientsDesign(){
+        let data = await getEmployeesWithoutOfficeAndClients();
+        console.log(await getEmployeesWithoutOfficeAndClients())
+        data.forEach(val => {
+            this.shadowRoot.innerHTML += /*html*/`
+                <div class="report__card">
+                    <div class="card__title">
+                        <p> Oficinas : </p>
+    
+                        
+                    </div>
+                    <div class="card__body">
+                        <div class="body__marck">
+                            <p><b>Oficinas: </b>${val.name_office}</p>
 
+                            
+                        </div>
+                    </div>
+                </div>
+    `
+    });
+
+    }
+//3.11 Devuelve un listado con los clientes que han realizado algún pedido pero no han realizado ningún pago.
+
+    async getAllClientsWhoHaveRequestedButHaventPaidDesign(){
+        let data = await getAllClientsWhoHaveRequestedButHaventPaid();
+        console.log(await getAllClientsWhoHaveRequestedButHaventPaid())
+        data.forEach(val => {
+            this.shadowRoot.innerHTML += /*html*/`
+                <div class="report__card">
+                    <div class="card__title">
+                        <p>No han pagado: </p>
+    
+                        
+                    </div>
+                    <div class="card__body">
+                        <div class="body__marck">
+                            <p><b>Nombre del pedido: </b>${val.name}</p>
+                            <p><b>description: </b>${val.description}</p>
+                            <p><b>Clientes </b>${val.description}</p>
+                            
+                        </div>
+                    </div>
+                </div>
+    `
+    });
+    }
+
+//3.12. Devuelve un listado con los datos de los empleados que no tienen clientes asociados y el nombre de su jefe asociado.
+    async getAllEmployeesThatArentAssociatedWithAnyClientAndHisBossNameDesign(){
+        let data = await getAllEmployeesThatArentAssociatedWithAnyClientAndHisBossName();
+        console.log(await getAllEmployeesThatArentAssociatedWithAnyClientAndHisBossName());
+        data.forEach(val => {
+            this.shadowRoot.innerHTML += /*html*/`
+                <div class="report__card">
+                    <div class="card__title">
+                        <p>informacion:  </p>
+    
+                        
+                    </div>
+                    <div class="card__body">
+                        <div class="body__marck">
+                            <p><b>Empleado: </b>${val.name}</p>
+                            <p><b>LastName de Empleado: </b>${val.lastname1}</p>
+                            <p><b>Codigo empleado: </b>${val.employee_code}</p>
+                            <p><b>Jefe Asociado </b>${val.name_boss}</p>
+                            
+                        </div>
+                    </div>
+                </div>
+    `
+    });
+    }
 
 
 
@@ -848,6 +944,13 @@ async getProductsNotOrderedDesign(){
         if(name=="logic" && now=="employ_3.4") this.getAllEmployeesThatDontHaveOfficeDesign()
         if(name=="logic" && now=="employ_3.5") this.getAllEmployeesThatArentAssociatedWithAnyClientDesign()
         if(name=="logic" && now=="employ_3.6") this.getAllEmployeesThatArentAssociatedWithAnyClientAndDataOfHisOfficeDesign()
+        if(name=="logic" && now=="employ_3.7") this.getAllEmployeesThatArentAssociatedWithAnyClientOrOfficeDesign()
+        if(name=="logic" && now=="employ_3.10") this.getEmployeesWithoutOfficeAndClientsDesign()
+        if(name=="logic" && now=="employ_3.12") this.getAllEmployeesThatArentAssociatedWithAnyClientAndHisBossNameDesign()
+
+            
+
+
 
 
             
@@ -855,6 +958,9 @@ async getProductsNotOrderedDesign(){
         if(name=="logic" && now=="client_3.1") this.getAllclientsNotPaymentsDesign()
         if(name=="logic" && now=="client_3.2") this.getAllclientsNotRequestsDesign()
         if(name=="logic" && now=="client_3.3") this.getAllclientsNotRequestsAndNotPaymentsDesign()
+        if(name=="logic" && now=="client_3.11") this.getAllClientsWhoHaveRequestedButHaventPaidDesign()
+
+            
 
             
         /*PARTE DE EMPLEADOS*/ 
