@@ -266,12 +266,18 @@ export const getAllClientsAndSalesManagerNameAndIfThereWhoDontPaymentAndCity = a
   return dataUpdate
 }
 
+//2.6 clientes en fuenlabrada
+export const getAllClientsInFuenlabrada = async()=>{
+  let res = await fetch("http://localhost:5510/clients?city=Fuenlabrada")
+  let data = await res.json();
+  return data;
+}
 
 //2.10 Devuelve el nombre de los clientes a los que no se les ha entregado a tiempo un pedido.
-// Devuelve el nombre de los clientes a los que no se les ha entregado a tiempo un pedido.
+
 export const getClientsWithDelayedOrders = async () => {
   try {
-    const orders = await fetch("http://localhost:5501/orders").then(response => response.json());
+    const orders = await fetch("http://localhost:5508/requests").then(response => response.json());
     const clients = await fetch("http://localhost:5510/clients").then(response => response.json());
     const offices = await fetch("http://localhost:5504/offices").then(response => response.json());
     const payments = await fetch("http://localhost:5505/payments").then(response => response.json());

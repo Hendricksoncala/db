@@ -10,6 +10,7 @@ import {
     getAllclientsNotRequestsAndNotPayments,
     getAllClientsAndSalesManagerNameAndIfThereWhoDontPaymentAndCity,
     getAllSpanishClients,
+    getAllClientsInFuenlabrada,
 
 } from "../module/clients.js";
 
@@ -519,15 +520,31 @@ export class Mycard extends HTMLElement{
         });
     }
 //2.6. Lista la dirección de las oficinas que tengan clientes en `Fuenlabrada`.
-    async AllDirectionsWithClientsInFuenlabrada(){
-        let data = await AllDirectionsWithClientsInFuenlabrada();
-        console.log( await AllDirectionsWithClientsInFuenlabrada());
+    async getAllClientsInFuenlabradaDesign(){
+        let data = await getAllClientsInFuenlabrada();
+        console.log( await getAllClientsInFuenlabrada());
         data.forEach(val => {
+            this.shadowRoot.innerHTML += /*html*/`
+                <div class="report__card">
+                    <div class="card__title">
+                        <div>${val.client_name}</div>
+                    </div>
+                    <div class="card__body">
+                        <div class="body__marck">
+                            <p><b>Cliente: </b>${val.client_name}</p>
+                            <p><b>Direccion: </b>${val.address1}</p>
+                            <p><b>Ciudad de Oficina </b>${val.city}</p>
+
+                        </div>
+                    </div>
+                </div>
+        `
             
         });
     }
 
 //2.7
+
 //2.8 Devuelve un listado con el nombre de los empleados junto con el nombre de sus jefes.
     async getAllEmpleyeesAndBossDesign(){
         let data = await getAllEmpleyeesAndBoss();
@@ -743,7 +760,7 @@ async getProductsNotOrderedDesign(){
         if(name=="logic" && now=="client_2.3") this.getAllClientsWithoutPaymentsAndSalesManagerNameDesign()
         if(name=="logic" && now=="client_2.4") this.getAllClientsAndSalesManagerNameAndIfThereIsPaymentsAndCityDesign()
         if(name=="logic" && now=="client_2.5") this.getAllClientsAndSalesManagerNameAndIfThereWhoDontPaymentAndCityDesign()
-        // if(name=="logic" && now=="client_2.6") this.
+        if(name=="logic" && now=="client_2.6") this.getAllClientsInFuenlabradaDesign()
         // if(name=="logic" && now=="client_2.7") this.
 
         

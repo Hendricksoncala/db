@@ -1,5 +1,5 @@
 import {
-    getAll,
+     getAll,
      getAllClientsAndSalesManagers ,
      getAllClientsAndSalesManagerNameAndIfThereIsPayments,
      getAllClientsWithoutPaymentsAndSalesManagerName,
@@ -9,7 +9,9 @@ import {
      getProductGamasByClient,
      getAllclientsNotPayments,
      getAllClientsWhoHaveRequestedButHaventPaid,
-     getAllSpanishClients
+     getAllSpanishClients,
+     getAllClientsInFuenlabrada,
+     
  
 
     }
@@ -27,8 +29,8 @@ import {
   getAllFullNameAndEmailsAndBoss,
   getBossFullNameAndEmail,
   getAllEmployeesThatDontHaveOffice,
-  getAllEmployeesThatArentAssociatedWithAnyClient
-  ,
+  getAllEmployeesThatArentAssociatedWithAnyClient,
+  
   
 
 } from "./module/employees.js"
@@ -54,6 +56,6 @@ import {
   getAllFormsPayments,
 
 } from "./module/payment.js"
-console.log(await getProductsNotOrdered())
+console.log(await getClientsWithDelayedOrders())
 
 
