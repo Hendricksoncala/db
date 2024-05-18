@@ -36,7 +36,8 @@ import {
 import {
 
   getProductsNeverOrdered,
-  getProductsNotOrdered
+  getProductsNotOrdered,
+  getAllProductsOrnamentales100
 
 } from "./module/product.js"
 
@@ -49,9 +50,10 @@ import {
 } from "./module/requests.js"
 
 import {
-  getAllPaymentsFromPayPalEachYear
+  getAllPaymentsFromPayPalEachYear,
+  getAllFormsPayments,
 
 } from "./module/payment.js"
-console.log(await getAllPaymentsFromPayPalEachYear())
+console.log(await getProductsNotOrdered())
 
 

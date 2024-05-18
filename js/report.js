@@ -43,6 +43,7 @@ btn.forEach(val =>{
         }
         if(e.target.innerHTML=="product"){
             report__details.innerHTML = /*html*/`
+                <my-details logic="product_15" text="15.Devuelve un listado con todos los productos que pertenecen a la gama Ornamentales y que tienen más de 100 unidades en stock. El listado deberá estar ordenado por su precio de venta, mostrando en primer lugar los de mayor precio."></my-details>
                 <my-details logic="product_3.8" text="3.8 Devuelve un listado de los productos que nunca han aparecido en un pedido."></my-details>
                 <my-details logic="product_3.9" text="3.9 DDevuelve un listado de los productos que nunca han aparecido en un pedido. El resultado debe mostrar el nombre, la descripción y la imagen del producto."></my-details>
 
@@ -70,6 +71,7 @@ btn.forEach(val =>{
         if(e.target.innerHTML=="payments"){
             report__details.innerHTML = /*html*/`
             <my-details logic="payments_13" text="13. Devuelve un listado con todos los pagos que se realizaron en el  año 2008 mediante Paypal. Ordene el resultado de mayor a menor."></my-details>
+            <my-details logic="payments_14" text="14.Devuelve un listado con todas las formas de pago que aparecen en la tabla pago. tenga en cuantta que no deben aparecer formas de pago repetidas"></my-details>
 
             `;
         }

@@ -26,7 +26,8 @@ import {
 
 import {
     getProductsNeverOrdered,
-    getProductsNotOrdered
+    getProductsNotOrdered,
+    getAllProductsOrnamentales100,
 } from "../module/product.js";
 
 import {
@@ -336,6 +337,49 @@ export class Mycard extends HTMLElement{
     }
 
 //14.Devuelve un listado con todas las formas de pago que aparecen en la tabla pago. tenga en cuantta que no deben aparecer formas de pago repetidas
+    async getAllFormsPaymentsDesign(){
+        let data = await getAllFormsPayments()
+        console.log(await getAllFormsPayments());
+        data.forEach(val => {
+            this.shadowRoot.innerHTML += /*html*/`
+                <div class="report__card">
+                    <div class="card__title">
+                        <div>Metodos de pago</div>
+                    </div>
+                    <div class="card__body">
+                        <div class="body__marck">
+                            <p><b>Metodos de pago: </b>Paypal, Transferencia, Cheque</p>
+
+
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+    
+    }
+
+//15.Devuelve un listado con todos los productos que pertenecen a la gama Ornamentales y que tienen más de 100 unidades en stock. El listado deberá estar ordenado por su precio de venta, mostrando en primer lugar los de mayor precio.
+    async getAllProductsOrnamentales100Design(){
+        let data = await getAllProductsOrnamentales100();
+        console.log(await getAllProductsOrnamentales100())
+        data.forEach(val => {
+            this.shadowRoot.innerHTML += /*html*/`
+                <div class="report__card">
+                    <div class="card__title">
+                        <div>codigo : ${val.code_product}</div>
+                    </div>
+                    <div class="card__body">
+                        <div class="body__marck">
+                            <p><b>Nombre: </b>${val.name}</p>
+                            <p><b>Gama: </b>${val.gama}</p>
+                            <p><b>Stock: </b>${val.stock}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+    }
 
 
 //16
@@ -647,7 +691,7 @@ async getProductsNotOrderedDesign(){
             <div class="report__card">
                 <div class="card__title">
                     <p> Productos nunca pedidos : </p>
-                    <div>${val.code_product }</div> 
+
                     
                 </div>
                 <div class="card__body">
@@ -689,6 +733,9 @@ async getProductsNotOrderedDesign(){
 
 
         if(name=="logic" && now=="payments_13") this.getAllPaymentsFromPayPalEachYearDesign()
+        if(name=="logic" && now=="payments_14") this.getAllFormsPaymentsDesign()
+
+            
 
 
         if(name=="logic" && now=="client_2.1") this.getAllClientsAndSalesManagersDesign()
@@ -719,6 +766,9 @@ async getProductsNotOrderedDesign(){
         /*PARTE DE PRODUCTOS*/
         if(name=="logic" && now=="product_3.8") this.getProductsNeverOrderedDesign()
         if(name=="logic" && now=="product_3.9") this.getProductsNotOrderedDesign()
+        if(name=="logic" && now=="product_15") this.getAllProductsOrnamentales100Design()
+
+            
 
 
 
