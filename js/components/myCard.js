@@ -9,6 +9,7 @@ import {
     getAllclientsNotRequests,
     getAllclientsNotRequestsAndNotPayments,
     getAllClientsAndSalesManagerNameAndIfThereWhoDontPaymentAndCity,
+    getAllSpanishClients,
 
 } from "../module/clients.js";
 
@@ -33,6 +34,10 @@ import {
     getAllOficceCityAndMovil,
     AllDirectionsWithClientsInFuenlabrada
 }   from "../module/offices.js"
+
+import {
+    requestStatuses,
+} from "../module/requests.js"
 //PRIMERA PARTE DE LAS CONSULTAS------------------------------------------------------
 
 
@@ -156,6 +161,75 @@ export class Mycard extends HTMLElement{
             `;
         });
     }
+
+//6. Devuelve un listado con el nombre de los todos los clientes españoles.
+    async getAllSpanishClientsDesign(){
+        let data = await getAllSpanishClients();
+        console.log( await getAllSpanishClients())
+        data.forEach(val => {
+            this.shadowRoot.innerHTML += /*html*/`
+                <div class="report__card">
+                    <div class="card__title">
+                        <div>${val.name}</div>
+                    </div>
+                    <div class="card__body">
+                        <div class="body__marck">
+                            <p><b>Nombre: </b>${val.client_name}</p>
+                            <p><b>Pais: </b>${val.region}</p>
+
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+// 7. Devuelve un listado con los distintos estados por los que puede pasar un pedido. 
+    async requestStatusesDesign(){
+        let data = await requestStatuses();
+        console.log(await requestStatuses())
+        data.forEach(val => {
+            this.shadowRoot.innerHTML += /*html*/`
+                <div class="report__card">
+                    <div class="card__title">
+                        <div>Estados</div>
+                    </div>
+                    <div class="card__body">
+                        <div class="body__marck">
+                            <p><b>Estados: </b>Entregado, Rechazado, Pendiente</p>
+
+
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+    }
+//8
+//9. Devuelve un listado con el código de pedido, código de cliente, fecha esperada y fecha de entrega de los pedidos que no han sido entregados a tiempo.
+    async getAllCodeRequestCodeClientDateRequestDateWaitDesign(){
+        let data = await getAllCodeRequestCodeClientDateRequestDateWait();
+        console.log(await getAllCodeRequestCodeClientDateRequestDateWait());
+        data.forEach(val => {
+            this.shadowRoot.innerHTML += /*html*/`
+                <div class="report__card">
+                    <div class="card__title">
+                        <div>${val.name}</div>
+                    </div>
+                    <div class="card__body">
+                        <div class="body__marck">
+                            <p><b>codigo de pedido: </b>${val.code_requests}</p>
+                            <p><b>codigo de cliente: </b>${val.code_client}</p>
+                            <p><b>fecha de espera: </b>${val.date_wait}</p>
+                            <p><b>fecha de entrega: </b>${val.date_delivery}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+
 
 //16
     async getClientsEmployDesign(){
@@ -498,7 +572,9 @@ async getProductsNotOrderedDesign(){
 
 
         if(name=="logic" && now=="client_16") this.getClientsEmployDesign()
-        if(name=="logic" && now=="client_7") this.getAllDesign()
+        if(name=="logic" && now=="client_6") this.getAllSpanishClientsDesign()
+            
+        if(name=="logic" && now=="requests_7") this.requestStatusesDesign()
         if(name=="logic" && now=="client_2.1") this.getAllClientsAndSalesManagersDesign()
         if(name=="logic" && now=="client_2.2") this.getAllClientsAndSalesManagerNameAndIfThereIsPaymentsDesign()
         if(name=="logic" && now=="client_2.3") this.getAllClientsWithoutPaymentsAndSalesManagerNameDesign()

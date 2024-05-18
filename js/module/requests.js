@@ -1,3 +1,20 @@
+// 7. Devuelve un listado con los distintos estados por los que puede pasar un pedido. 
+
+export const requestStatuses = async() => {
+    let res = await fetch("http://localhost:5508/requests")
+    let data = await res.json();
+    let dataUpdate = []
+
+    data.forEach(val => {
+        if (!dataUpdate.includes(val.status)) {
+            dataUpdate.push(val.status)
+        }
+    })
+    
+    return dataUpdate;
+
+}
+
 //9.Devuelve un listado con el código de pedido, código de cliente, fecha esperada y fecha de entrega de los pedidos que no han sido entregados a tiempo.
 
 export const getAllCodeRequestCodeClientDateRequestDateWait = async () => {

@@ -5,6 +5,14 @@ import { getAllClientsWhoRequest } from "./requests.js";
 import { getAllRequestDetailsByRequestCode } from "./request_details.js";
 import { getAllProductsByCode } from "./product.js"
 
+// 6. Devuelve un listado con el nombre de todos los clientes españoles.
+
+export const getAllSpanishClients = async() => {
+  let res = await fetch("http://localhost:5510/clients?country=Spain")
+  let client = await res.json();
+  return client
+}
+
 
 // 16. Devuelve un listado con todos los clientes que sean de la 
 // ciudad de Madrid y cuyo representante de ventas tenga el código 

@@ -8,7 +8,8 @@ import {
      getClientsWithDelayedOrders,
      getProductGamasByClient,
      getAllclientsNotPayments,
-     getAllClientsWhoHaveRequestedButHaventPaid
+     getAllClientsWhoHaveRequestedButHaventPaid,
+     getAllSpanishClients
  
 
     }
@@ -39,6 +40,11 @@ import {
 
 } from "./module/product.js"
 
-console.log(await getAllClientsWhoHaveRequestedButHaventPaid())
+import {
+  requestStatuses,
+  getAllCodeRequestCodeClientDateRequestDateWait
+} from "./module/requests.js"
+
+console.log(await getAllCodeRequestCodeClientDateRequestDateWait())
 
 
