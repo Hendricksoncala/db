@@ -37,7 +37,21 @@ import {
 
 import {
     requestStatuses,
+    getAllCodeRequestCodeClientDateRequestDateWait,
+    getOverdueRequests,
+    getAllRejectedOrdersIn2009,
+    getAllDeliveredOrderInJanuary,
 } from "../module/requests.js"
+
+import {
+    getAllPaymentsFromPayPalEachYear,
+    getAllFormsPayments,
+  
+  } from "../module/payment.js"
+
+  
+  
+  
 //PRIMERA PARTE DE LAS CONSULTAS------------------------------------------------------
 
 
@@ -214,11 +228,11 @@ export class Mycard extends HTMLElement{
             this.shadowRoot.innerHTML += /*html*/`
                 <div class="report__card">
                     <div class="card__title">
-                        <div>${val.name}</div>
+                        <div>codigo : ${val.code_request}</div>
                     </div>
                     <div class="card__body">
                         <div class="body__marck">
-                            <p><b>codigo de pedido: </b>${val.code_requests}</p>
+                            <p><b>codigo de pedido: </b>${val.code_request}</p>
                             <p><b>codigo de cliente: </b>${val.code_client}</p>
                             <p><b>fecha de espera: </b>${val.date_wait}</p>
                             <p><b>fecha de entrega: </b>${val.date_delivery}</p>
@@ -228,7 +242,100 @@ export class Mycard extends HTMLElement{
             `;
         });
     }
+//10.Devuelve un listado con el código de pedido, código de cliente, fecha esperada y fecha de entrega de los pedidos cuya fecha de entrega ha sido al menos dos días antes de la fecha esperada.
+    async getOverdueRequestsDesign(){
+        let data = await getOverdueRequests();
+        console.log(await getOverdueRequests());
+        data.forEach(val => {
+            this.shadowRoot.innerHTML += /*html*/`
+                <div class="report__card">
+                    <div class="card__title">
+                        <div>codigo : ${val.client}</div>
+                    </div>
+                    <div class="card__body">
+                        <div class="body__marck">
+                            <p><b>codigo de pedido: </b>${val.client}</p>
+                            <p><b>codigo de cliente: </b>${val.request}</p>
+                            <p><b>fecha de espera: </b>${val.fecha_esperada}</p>
+                            <p><b>fecha de entrega: </b>${val.fecha_entrega}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+    }
 
+//11. Devuelve un listado de todos los pedidos que fueron rechazados en 2009.
+    async getAllRejectedOrdersIn2009Design(){
+        let data = await getAllRejectedOrdersIn2009();
+        console.log(await getAllRejectedOrdersIn2009());
+        data.forEach(val => {
+            this.shadowRoot.innerHTML += /*html*/`
+                <div class="report__card">
+                    <div class="card__title">
+                        <div>codigo : ${val.code_request}</div>
+                    </div>
+                    <div class="card__body">
+                        <div class="body__marck">
+                            <p><b>codigo de pedido: </b>${val.code_request}</p>
+                            <p><b>codigo de cliente: </b>${val.code_client}</p>
+                            <p><b>fecha de espera: </b>${val.date_wait}</p>
+                            <p><b>fecha de entrega: </b>${val.date_delivery}</p>
+                            <p><b>Estatus: </b>${val.status}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+//12.Devuelve un listado de todos los pedidos que han sido entregados en el mes de enero de cualquier ano
+    async getAllDeliveredOrderInJanuaryDesign(){
+        let data = await getAllDeliveredOrderInJanuary();
+        console.log(await getAllDeliveredOrderInJanuary())
+        data.forEach(val => {
+            this.shadowRoot.innerHTML += /*html*/`
+                <div class="report__card">
+                    <div class="card__title">
+                        <div>codigo : ${val.code_request}</div>
+                    </div>
+                    <div class="card__body">
+                        <div class="body__marck">
+                            <p><b>codigo de pedido: </b>${val.code_request}</p>
+                            <p><b>fecha de espera: </b>${val.date_wait}</p>
+                            <p><b>fecha de entrega: </b>${val.date_delivery}</p>
+                            <p><b>Estatus: </b>${val.status}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+    }
+    
+// 13 Devuelve un listado con todos los pagos que se realizaron en el  año 2008 mediante Paypal. Ordene el resultado de mayor a menor.
+    async getAllPaymentsFromPayPalEachYearDesign(){
+        let data = await getAllPaymentsFromPayPalEachYear();
+        console.log(await getAllPaymentsFromPayPalEachYear())
+        data.forEach(val => {
+            this.shadowRoot.innerHTML += /*html*/`
+                <div class="report__card">
+                    <div class="card__title">
+                        <div>codigo : ${val.code_client}</div>
+                    </div>
+                    <div class="card__body">
+                        <div class="body__marck">
+                            <p><b>codigo de cliente: </b>${val.code_client}</p>
+                            <p><b>Metodo de pago: </b>${val.payment}</p>
+                            <p><b>fecha de pago: </b>${val.date_payment}</p>
+                            <p><b>Valor: </b>${val.total}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+//14.Devuelve un listado con todas las formas de pago que aparecen en la tabla pago. tenga en cuantta que no deben aparecer formas de pago repetidas
 
 
 //16
@@ -575,6 +682,15 @@ async getProductsNotOrderedDesign(){
         if(name=="logic" && now=="client_6") this.getAllSpanishClientsDesign()
             
         if(name=="logic" && now=="requests_7") this.requestStatusesDesign()
+        if(name=="logic" && now=="requests_9") this.getAllCodeRequestCodeClientDateRequestDateWaitDesign()
+        if(name=="logic" && now=="requests_10") this.getOverdueRequestsDesign()
+        if(name=="logic" && now=="requests_11") this.getAllRejectedOrdersIn2009Design()
+        if(name=="logic" && now=="requests_12") this.getAllDeliveredOrderInJanuaryDesign()
+
+
+        if(name=="logic" && now=="payments_13") this.getAllPaymentsFromPayPalEachYearDesign()
+
+
         if(name=="logic" && now=="client_2.1") this.getAllClientsAndSalesManagersDesign()
         if(name=="logic" && now=="client_2.2") this.getAllClientsAndSalesManagerNameAndIfThereIsPaymentsDesign()
         if(name=="logic" && now=="client_2.3") this.getAllClientsWithoutPaymentsAndSalesManagerNameDesign()

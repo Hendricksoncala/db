@@ -58,6 +58,18 @@ btn.forEach(val =>{
         if(e.target.innerHTML=="requests"){
             report__details.innerHTML = /*html*/`
             <my-details logic="requests_7" text="7. Devuelve un listado con los distintos estados por los que puede pasar un pedido. "></my-details>
+            <my-details logic="requests_9" text="9. Devuelve un listado con el código de pedido, código de cliente, fecha esperada y fecha de entrega de los pedidos que no han sido entregados a tiempo."></my-details>
+            <my-details logic="requests_10" text="10.Devuelve un listado con el código de pedido, código de cliente, fecha esperada y fecha de entrega de los pedidos cuya fecha de entrega ha sido al menos dos días antes de la fecha esperada."></my-details>
+            <my-details logic="requests_11" text="11. Devuelve un listado de todos los pedidos que fueron rechazados en 2009."></my-details>
+            <my-details logic="requests_12" text="12.Devuelve un listado de todos los pedidos que han sido entregados en el mes de enero de cualquier ano"></my-details>
+
+
+
+            `;
+        }
+        if(e.target.innerHTML=="payments"){
+            report__details.innerHTML = /*html*/`
+            <my-details logic="payments_13" text="13. Devuelve un listado con todos los pagos que se realizaron en el  año 2008 mediante Paypal. Ordene el resultado de mayor a menor."></my-details>
 
             `;
         }

@@ -42,9 +42,16 @@ import {
 
 import {
   requestStatuses,
-  getAllCodeRequestCodeClientDateRequestDateWait
+  getAllCodeRequestCodeClientDateRequestDateWait,
+  getOverdueRequests,
+  getAllRejectedOrdersIn2009,
+  getAllDeliveredOrderInJanuary
 } from "./module/requests.js"
 
-console.log(await getAllCodeRequestCodeClientDateRequestDateWait())
+import {
+  getAllPaymentsFromPayPalEachYear
+
+} from "./module/payment.js"
+console.log(await getAllPaymentsFromPayPalEachYear())
 
 
