@@ -20,7 +20,11 @@ import {
     getEmployeesWithoutOfficeAndClients,
     getAllFullNameAndEmailsAndBoss,
     getBossFullNameAndEmail,
-    getAllFullnamePositionDiferentSalesRepresentative
+    getAllFullnamePositionDiferentSalesRepresentative,
+    getAllEmployeesThatDontHaveOffice,
+    getAllEmployeesThatArentAssociatedWithAnyClient,
+    getAllEmployeesThatArentAssociatedWithAnyClientAndDataOfHisOffice,
+    
     
     
 } from "../module/employees.js";
@@ -553,11 +557,11 @@ export class Mycard extends HTMLElement{
             this.shadowRoot.innerHTML += /*html*/`
                 <div class="report__card">
                     <div class="card__title">
-                        <div>${val.employee}</div>
+                        <div>${val.name}</div>
                     </div>
                     <div class="card__body">
                         <div class="body__marck">
-                            <p><b>Empleado: </b>${val.employee}<p>
+                            <p><b>Empleado: </b>${val.name}<p>
                             <p><b>Boss </b>${val.boss}</p>
 
                         </div>
@@ -660,7 +664,7 @@ export class Mycard extends HTMLElement{
                     <div class="card__body">
                         <div class="body__marck">
                             <p><b>Codigo: </b>${val.client_code}</p>
-                            <p><b>Nombre de cliente: </b>${val.client_name}
+                            <p><b>Nombre de cliente: </b>${val.client_name}</p>
 
 
                         </div>
@@ -672,10 +676,82 @@ export class Mycard extends HTMLElement{
     }
 
 
-//3.4
-//3.5
-//3.6
-//3.7
+//3.4  Devuelve un listado que muestre solamente los empleados que no tienen una oficina asociada.
+    async getAllEmployeesThatDontHaveOfficeDesign(){
+        let data = await getAllEmployeesThatDontHaveOffice();
+        console.log(await getAllEmployeesThatDontHaveOffice());
+        data.forEach(val => {
+            this.shadowRoot.innerHTML += /*html*/`
+                <div class="report__card">
+                    <div class="card__title">
+                        <div>Empleado:  ${val.name }</div> 
+                        
+                    </div>
+                    <div class="card__body">
+                        <div class="body__marck">
+                            <p><b>Codigo: </b>${val.employee_code}</p>
+                            <p><b>Nombre:  ${val.name }</p>
+
+
+                        </div>
+                    </div>
+                </div>
+        `
+        });
+    }
+//3.5 Devuelve un listado que muestre solamente los empleados que no tienen un cliente asociado.
+
+    async getAllEmployeesThatArentAssociatedWithAnyClientDesign(){
+        let data = await getAllEmployeesThatArentAssociatedWithAnyClient();
+        console.log(await getAllEmployeesThatArentAssociatedWithAnyClient());
+        data.forEach(val => {
+            this.shadowRoot.innerHTML += /*html*/`
+                <div class="report__card">
+                    <div class="card__title">
+                        <div>Empleado:  ${val.name }</div> 
+                        
+                    </div>
+                    <div class="card__body">
+                        <div class="body__marck">
+                            <p><b>Codigo: </b>${val.employee_code}</p>
+                            <p><b>Nombre:  ${val.name }</p>
+
+
+                        </div>
+                    </div>
+                </div>
+        `
+        });
+    }
+//3.6. Devuelve un listado que muestre solamente los empleados que no tienen un cliente asociado junto con los datos de la oficina donde trabajan.
+
+    async getAllEmployeesThatArentAssociatedWithAnyClientAndDataOfHisOfficeDesign(){
+        let data = await getAllEmployeesThatArentAssociatedWithAnyClientAndDataOfHisOffice();
+        console.log(await getAllEmployeesThatArentAssociatedWithAnyClientAndDataOfHisOffice());
+        data.forEach(val => {
+            this.shadowRoot.innerHTML += /*html*/`
+                <div class="report__card">
+                    <div class="card__title">
+                        <div>Empleado:  ${val.name }</div> 
+                        
+                    </div>
+                    <div class="card__body">
+                        <div class="body__marck">
+                            <p><b>Codigo: </b>${val.employee_code}</p>
+                            <p><b>Nombre:  ${val.name }</p>
+
+
+                        </div>
+                    </div>
+                </div>
+        `
+        });
+    
+    }
+//3.7 Devuelve un listado que muestre los empleados que no tienen una oficina asociada y los que no tienen un cliente asociado.
+
+
+
 //3.8 Devuelve un listado de los productos que nunca han aparecido en un pedido.
 async getProductsNeverOrderedDesign(){
     let data = await getProductsNeverOrdered();
@@ -769,8 +845,12 @@ async getProductsNotOrderedDesign(){
         if(name=="logic" && now=="employ_5") this.getAllFullnamePositionDiferentSalesRepresentativeDesign()
         if(name=="logic" && now=="employ_2.8") this.getAllEmpleyeesAndBossDesign()
         if(name=="logic" && now=="employ_2.9") this.getAllEmployeesAndBossOfBossDesign()
- 
+        if(name=="logic" && now=="employ_3.4") this.getAllEmployeesThatDontHaveOfficeDesign()
+        if(name=="logic" && now=="employ_3.5") this.getAllEmployeesThatArentAssociatedWithAnyClientDesign()
+        if(name=="logic" && now=="employ_3.6") this.getAllEmployeesThatArentAssociatedWithAnyClientAndDataOfHisOfficeDesign()
 
+
+            
 
         if(name=="logic" && now=="client_3.1") this.getAllclientsNotPaymentsDesign()
         if(name=="logic" && now=="client_3.2") this.getAllclientsNotRequestsDesign()

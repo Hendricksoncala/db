@@ -5,6 +5,19 @@ import { getAllClientsWhoRequest } from "./requests.js";
 import { getAllRequestDetailsByRequestCode } from "./request_details.js";
 import { getAllProductsByCode } from "./product.js"
 
+//obtener cliente por codigo de asesor de ventas
+export const getAllClientsByManagerCode = async(code)=>{
+  let res = await fetch(`http://localhost:5510/clients?code_employee_sales_manager=${code}`)
+  let data = await res.json();
+  return data;
+}
+//Obtener todos los clientes
+export const getAllClients = async()=>{
+  let res = await fetch(`http://localhost:5510/clients`)
+  let data = await res.json();
+  return data;
+}
+
 // 6. Devuelve un listado con el nombre de todos los clientes españoles.
 
 export const getAllSpanishClients = async() => {
@@ -308,32 +321,44 @@ export const getClientsWithDelayedOrders = async () => {
 };
 
 
-//2. 11. Devuelve un listado de las diferentes gamas de producto que ha comprado cada cliente.
-export const getProductGamasByClient = async () => {
-  let clients = await fetch('http://localhost:5510/clients');
-  clients = await clients.json();
-  let productGamasByClient = [];
-  for (let client of clients) {
-    let clientRequests = await getAllClientsWhoRequest(client.client_code);
-    let gamas = [];
-    for (let request of clientRequests) {
-      let requestDetails = await getAllRequestDetailsByRequestCode(request.code_request);
-      for (let requestDetail of requestDetails) {
-        let product = await getAllProductsByCode(requestDetail.product_code);
-        for (let prod of product) {
-          if (!gamas.includes(prod.gama)) {
-            gamas.push(prod.gama);
-          }
+//11. Devuelve un listado de las diferentes gamas de producto que ha comprado cada cliente. 
+export const getAllProductGamaThatAClientRequest = async()=>{
+    let res = await fetch(`http://localhost:5510/clients`)
+    let data = await res.json();
+    let dataUpdate = [];
+    for(let i = 0; i<data.length; i++) {
+        let [ requests ] = await getAllClientsWhoRequest(data[i].client_code);
+        let gamas = []
+        if(requests != undefined) {
+            let {...requestsUpdate } = requests;
+            let {...clientUpdate} = data[i];
+            data[i] = clientUpdate;
+            for(let j = 0; j<requests.length; j++ ) {
+                let [ request_details ] = await getAllRequestDetailsByRequestCode(requests[j].code_request);
+                let {...request_detailsUpdate} = request_details;
+                for(let k = 0; k<request_details.length; k++ ) {
+                    let [ product ] = await getAllProductsByCode(request_details[k].product_code);
+                    let {...productUpdate } = product;
+                    for(let l = 0; l<product.length; l++ ) { 
+                        let exists = gamas.some(item => item.gama === product[l].gama);
+                        if(!exists) { 
+                            gamas.push({
+                                gama: product[l].gama
+                            })
+                        }
+                    }
+                }
+            }
+            //console.log(gamas);
+            let arrayFusionado = { ...clientUpdate, gamas};
+            dataUpdate.push({
+                client_name: `${arrayFusionado.client_name}`,
+                gamas: arrayFusionado.gamas
+            });
         }
-      }
     }
-    productGamasByClient.push({
-      client_name: client.client_name,
-      gamas: gamas
-    });
-  }
-  return productGamasByClient;
-};
+    return dataUpdate;
+}
 
 
 //3.1 
