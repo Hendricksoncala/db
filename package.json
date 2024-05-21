@@ -5,7 +5,7 @@
     "main": "js/main.js",
     "type": "module",
     "scripts": {
-        "server": "json-server js/db/clients.json -p 5510  & json-server js/db/employees.json -p 5502 & json-server js/db/gama.json -p 5503 & json-server js/db/offices.json -p 5504 & json-server js/db/payments.json -p 5505 & json-server js/db/product.json -p 5506 & json-server js/db/request_details.json -p 5507 & json-server js/db/requests.json -p 5508",
+        "server": "json-server js/db/clients.json -p 5511  & json-server js/db/employees.json -p 5512 & json-server js/db/gama.json -p 5513 & json-server js/db/offices.json -p 5514 & json-server js/db/payments.json -p 5515 & json-server js/db/product.json -p 5516 & json-server js/db/request_details.json -p 5517 & json-server js/db/requests.json -p 5518",
         "dev": "node --watch js/main.js"
     },
     "keywords": [],
